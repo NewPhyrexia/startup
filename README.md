@@ -8,11 +8,11 @@ Notes: https://github.com/NewPhyrexia/startup/blob/main/notes.md
 
 ### Elevator pitch
 
-Have you ever needed to prove yourself to someone, or needed to best a rival in a non-physical bout of skill and enderance. The Tapper application makes it so people can good head to head by pulling out their phones and face off in a battle of speed. Each user taps their screen as fast as possible as the timer counts down. The players will see all other player's tap scores in realtime. After the time is out and the smoke settles the victor is declared.  
+Have you ever needed to prove yourself to someone, or needed to best a rival in a non-physical bout of skill and endurance. The Tapper application makes it so people can good head to head by pulling out their phones and face off in a battle of speed. Each user taps their screen as fast as possible as the timer counts down. The players will see all other player's tap scores in realtime. After the time is out and the smoke settles the victor is declared.  
 
 ### Design
 
-![Mock](voterMockUI.jpg)
+![Mock](Tapper.png)
 
 ### Key features
 
