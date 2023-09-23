@@ -12,7 +12,7 @@ Have you ever needed to prove yourself to someone, or needed to best a rival in 
 
 ### Design
 
-![Mock](Tapper.png)
+![Mock](TapperMock.png)
 
 ### Key features
 
