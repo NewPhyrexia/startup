@@ -14,10 +14,6 @@ Have you ever needed to prove yourself to someone, or needed to best a rival in 
 
 ![Mock](voterMockUI.jpg)
 
-Here is a sequence diagram that shows how people would interact with the backend to play.
-
-![Voting sequence diagram](votingSequenceDiagram.png)
-
 ### Key features
 
 - Secure login over HTTPS
