@@ -47,6 +47,7 @@ For this deliverable I built out the structure of my application using HTML.
 - **Links** - The login page automatically links to the play page. The play page contains links to play again and join a room.
 - **Text** - Each of the player names, timer, and scores are represented by text.
 - **Images** - This application does not use images
+- **3rd Party service calls** - Currenlty I do not believe this app will use these.
 - **Login** - Input box and submit button for login.
 - **Database** - The lifetime score represents data pulled from the database.
 - **WebSocket** - The current score or players represent the scores of realtime players in the room.
