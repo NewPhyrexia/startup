@@ -39,3 +39,14 @@ I am going to use the required technologies in the following ways.
 - **Login** - Register and login users. Credentials securely stored in database. Can't play unless authenticated.
 - **WebSocket** - As each user taps their screen, their tap count is broadcasted to all other users.
 - **React** - Application ported to use the React web framework.
+## HTML deliverable
+
+For this deliverable I built out the structure of my application using HTML.
+
+- **HTML pages** - Two HTML page that represent the ability to login and vote.
+- **Links** - The login page automatically links to the voter page. The voter page contains links for every voting choice.
+- **Text** - Each of the voting choices is represented by a textual description.
+- **Images** - I couldn't figure out how to include an image and so I didn't do this. 😔
+- **Login** - Input box and submit button for login.
+- **Database** - The voting choices represent data pulled from the database.
+- **WebSocket** - The count of voting results represent the tally of realtime votes.
