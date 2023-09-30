@@ -16,8 +16,10 @@
       <nav>
         <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
         <menu>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="play.html">Play</a></li>
+            <div class="players">
+                <span class="player-name">Mystery player</span>
+              </div>
+          <li><a href="index.html">Logout</a></li>
         </menu>
       </nav>
 
@@ -26,28 +28,27 @@
     </header>
 
     <main>
-      <div class="players">
-        Player:
-        <span class="player-name">Mystery player</span>
-      </div>
+      
       <ul class="notification">
-        <li class="player-name">Tim started a new game</li>
-        <li class="player-name">Ada started a new game</li>
-        <li class="player-name">Tim scored 337</li>
+        <li class="player-name">Jon: 12</li>
+        <li class="player-name">Noah: 17</li>
+        <li class="player-name">Dakota: 15</li>
+        <li class="player-name">Callie: 18</li>
       </ul>
 
       <!-- More formatting with old style HTML -->
       <br />
 
       <div>
-        <label for="count">Score</label>
+        <label for="count">Time</label>
         <input type="text" id="count" value="--" readonly />
       </div>
 
       <br />
 
       <div>
-        <button>Reset</button>
+        <label for="count">Score</label>
+        <input type="text" id="count" value="--" readonly />
       </div>
 
       <br />
@@ -91,6 +92,9 @@
             </td>
           </tr>
         </table>
+      </div>
+      <div>
+        <button>Play Again</button>
       </div>
     </main>
 
