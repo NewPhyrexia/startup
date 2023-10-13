@@ -51,3 +51,14 @@ For this deliverable I built out the structure of my application using HTML.
 - **Login** - Input box and submit button for login.
 - **Database** - The lifetime score represents data pulled from the database.
 - **WebSocket** - The current score or players represent the scores of realtime players in the room.
+
+## CSS deliverable
+
+For this deliverable I properly styled the application into its final appearance.
+
+- **Header, footer, and main content body**
+- **Navigation elements** - I dropped the underlines and changed the color for anchor elements.
+- **Responsive to window resizing** - My app looks great on all window sizes and devices
+- **Application elements** - Used good contrast and whitespace
+- **Application text content** - Consistent fonts
+- **Application images** - Still don't have images and so no styling here. 😔
