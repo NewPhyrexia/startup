@@ -36,12 +36,17 @@
       </nav>
     </header>
 
-    <main>
-        <div>
-            <label for="Lifetime Score">Lifetime Score</label>
-            <input type="text" id="count" value="209" readonly />
-        <input type="text" id="text" name="varText" placeholder="Room Number" required pattern="[Aa].*" />
-        <button onclick="window.location.href='play.html'">Enter</button>
+    <main class="bg-secondary">
+
+        <div class="room-lifetime-container">
+          <div class="lifetime-field">
+            <h2>Lifetime</h2>
+            <div class="lifetime-display" id="player-timer">201</div>
+          </div>
+          <div class="room-field">
+            <h2>Room</h2>
+            <div class="room-display" id="player-score">enter room</div>
+          </div>
         </div>
 
         <div class="scoreboard">
@@ -59,26 +64,27 @@
           </div>
         </div>
 
-      <div>
-        <label for="count">Time</label>
-        <input type="text" id="Time" value="0:09" readonly />
-      </div>
-
-      <div>
-        <label for="count">Score</label>
-        <input type="text" id="count" value="21" readonly />
-      </div>
+        <div class="score-timer-container">
+          <div class="timer-field">
+            <h2>Time</h2>
+            <div class="timer-display" id="player-timer">00:00</div>
+          </div>
+          <div class="score-field">
+            <h2>Score</h2>
+            <div class="score-display" id="player-score">0</div>
+          </div>
+        </div>
 
       <div>
         <button>
             <svg aria-hidden="true" viewBox="0 0 100 100" height="100" width="100">
                 <text x="35" y="50" fill="Black">TAP</text>
             </svg>
-          </button>
+        </button>
       </div>
-      
+
       <div>
-        <button onclick="window.location.href='play.html'">Play Again</button>
+        <button class="btn btn-teal" onclick="window.location.href='play.html'">Play Again</button>
       </div>
     </main>
 

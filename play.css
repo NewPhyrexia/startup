@@ -1,9 +1,4 @@
-body {
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Scoreboard container */
+/* Scoreboard container */
   .scoreboard {
     background-color: #333;
     color: #fff;
@@ -35,3 +30,77 @@ body {
     padding: 5px 10px;
   }
   
+/* Score and timer container */
+.score-timer-container {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+  }
+  
+  /* Timer field container */
+  .timer-field, .score-field {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    width: 180px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Score and timer container */
+.room-lifetime-container {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+  }
+  
+  /* Timer field container */
+  .lifetime-field, .room-field {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    width: 180px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Score and timer label */
+  h2 {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  /* Score and timer display */
+  .score-display, .timer-display {
+    background-color: #555;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 24px;
+  }
+
+  /* Score and timer display */
+  .room-display, .lifetime-display {
+    background-color: #555;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 24px;
+  }
+
+  /* Custom class for a teal button */
+  .btn-teal {
+    background-color: teal !important; 
+    color: #fff !important; 
+    border: none !important; 
+    border-radius: 4px !important; 
+  }
+
+  /* Hover effect for the custom button */
+  .btn-teal:hover {
+    background-color: #147171 !important;
+  }
