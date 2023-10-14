@@ -1,0 +1,37 @@
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Scoreboard container */
+  .scoreboard {
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    width: 200px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+  }
+  
+  /* Score rows */
+  .score-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+  }
+  
+  /* Team names */
+  .player-name {
+    font-weight: bold;
+  }
+  
+  /* Score values */
+  .score-value {
+    background-color: #555;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+  
