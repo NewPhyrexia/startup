@@ -3,7 +3,7 @@
     background-color: #333;
     color: #fff;
     border-radius: 10px;
-    width: 200px;
+    width: 400px;
     margin: 0 auto;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -96,28 +96,15 @@
     width: 100%;
     padding: 10px;
     font-size: 24px;
-    border: 2px solid #555; /* Set the border color to grey (#888) */
-    background-color: #555; /* Set the background color to grey (#f4f4f4) */
+    border: 2px solid #555;
+    background-color: #555;
     border-radius: 4px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s ease;
   }
   
   #custom-input:focus {
-    border-color: teal; /* Change the border color on focus */
-    outline: none; /* Remove the default focus outline */
+    border-color: teal;
+    outline: none;
   }
-  
-
-  /* Custom class for a teal button */
-  .btn-teal {
-    background-color: teal !important; 
-    color: #fff !important; 
-    border: none !important; 
-    border-radius: 4px !important; 
-  }
-
-  /* Hover effect for the custom button */
-  .btn-teal:hover {
-    background-color: #147171 !important;
-  }
+ 

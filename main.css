@@ -52,3 +52,18 @@ footer a {
     flex: 1 100vh;
   }
 }
+
+ 
+
+  /* Custom class for a teal button */
+  .btn-teal {
+    background-color: teal !important; 
+    color: #fff !important; 
+    border: none !important; 
+    border-radius: 4px !important; 
+  }
+
+  /* Hover effect for the custom button */
+  .btn-teal:hover {
+    background-color: #147171 !important;
+  }
