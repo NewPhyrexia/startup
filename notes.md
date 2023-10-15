@@ -17,3 +17,7 @@
   ```sh
   ./deployFiles.sh -k ~/keys/production.pem -h yourdomain.click -s simon
   ```
+
+## CSS
+
+- I learned that it is very important to have a seperate css file that can reference "class", "id", and "type" fields in my html.
