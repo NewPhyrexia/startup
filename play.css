@@ -1,35 +1,35 @@
 /* Scoreboard container */
-  .scoreboard {
-    background-color: #333;
-    color: #fff;
-    border-radius: 10px;
-    width: 400px;
-    margin: 0 auto;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    padding: 10px;
-  }
-  
-  /* Score rows */
-  .score-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-  }
-  
-  /* Team names */
-  .player-name {
-    font-weight: bold;
-  }
-  
-  /* Score values */
-  .score-value {
-    background-color: #555;
-    color: #fff;
-    border-radius: 5px;
-    padding: 5px 10px;
-  }
-  
+.scoreboard {
+  background-color: #333;
+  color: #fff;
+  border-radius: 10px;
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+/* Score rows */
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+/* Team names */
+.player-name {
+  font-weight: bold;
+}
+
+/* Score values */
+.score-value {
+  background-color: #555;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
 /* Score and timer container */
 .score-timer-container {
     display: flex;
@@ -98,6 +98,7 @@
     font-size: 24px;
     border: 2px solid #555;
     background-color: #555;
+    color: teal;
     border-radius: 4px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s ease;
@@ -107,4 +108,33 @@
     border-color: teal;
     outline: none;
   }
- 
+  
+  #custom-button {
+    width: 400px;
+    height: 150px; 
+    border: none;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+
+    font-size: 48px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+#custom-button:active {
+    background-color: #147171 !Important;
+}
+
+ /* Custom class for a teal button */
+ .btn-tap {
+  background-color: teal !important; 
+  color: #fff !important; 
+  border: none !important; 
+  border-radius: 4px !important; 
+}

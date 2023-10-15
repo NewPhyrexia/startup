@@ -30,7 +30,7 @@ menu {
 
 .navbar-brand {
   padding-left: 0.3em;
-  border-bottom: solid rgb(182, 182, 182) thin;
+  border-bottom: solid rgb(0, 128, 128) thick;
 }
 
 menu .nav-item {
@@ -53,8 +53,6 @@ footer a {
   }
 }
 
- 
-
   /* Custom class for a teal button */
   .btn-teal {
     background-color: teal !important; 
@@ -66,4 +64,21 @@ footer a {
   /* Hover effect for the custom button */
   .btn-teal:hover {
     background-color: #147171 !important;
+  }
+
+  #custom-input2 {
+    width: 50%;
+    padding: 2px;
+    font-size: 24px;
+    border: 2px solid #555;
+    background-color: #555;
+    color: teal;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+  }
+  
+  #custom-input2:focus {
+    border-color: teal;
+    outline: none;
   }
