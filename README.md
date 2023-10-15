@@ -56,9 +56,9 @@ For this deliverable I built out the structure of my application using HTML.
 
 For this deliverable I properly styled the application into its final appearance.
 
-- **Header, footer, and main content body**
-- **Navigation elements** - I dropped the underlines and changed the color for anchor elements.
-- **Responsive to window resizing** - My app looks great on all window sizes and devices
-- **Application elements** - Used good contrast and whitespace
+- **Header, footer, and main content body** - I mad these uniform throughout if at all possible.
+- **Navigation elements** - Are positioned and colored ways to make them noticable.
+- **Responsive to window resizing** - My app streches and shrinks to match many sizes of screens
+- **Application elements** - Used good contrast of darker colors
 - **Application text content** - Consistent fonts
-- **Application images** - Still don't have images and so no styling here. 😔
+- **Application images** - Still don't have images and so no styling here.
