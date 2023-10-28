@@ -1,15 +1,28 @@
-//temp high score place holder for database code
-let highScore = 24;
-
 let clickCount = 0;
 let timerRunning = false;
 let timerInterval;
 let buttonClicked = false;
 
+let player = JSON.parse(localStorage.getItem('player'));
+// Check if "lifetimeHighScore" exists in local storage
+const lifetimeHighScore = player.lifetimeHighScore;
+
+// Set the "highScore" variable based on the local storage value
+let highScore;
+if (lifetimeHighScore !== 0) {
+    highScore = lifetimeHighScore;
+} else {
+    highScore = 0;
+}
+const lifetimeHighScoreDisplay = document.getElementById('lifetime-highscore');
+    lifetimeHighScoreDisplay.textContent = highScore; 
+
 // Function to update the lifetime high score display
 function updateLifetimeHighScore() {
     const lifetimeHighScoreDisplay = document.getElementById('lifetime-highscore');
     lifetimeHighScoreDisplay.textContent = highScore; // Display highScore
+    player.lifetimeHighScore = highScore;
+    localStorage.setItem('player', JSON.stringify(player));
 }
 
 function updatePlayersScores() {
