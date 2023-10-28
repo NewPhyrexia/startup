@@ -12,6 +12,20 @@ function updateLifetimeHighScore() {
     lifetimeHighScoreDisplay.textContent = highScore; // Display highScore
 }
 
+function updatePlayersScores() {
+    //Player 1
+    const tempScore1 = document.getElementById('player-1');
+    tempScore1.textContent = "53";
+
+    //Player 2
+    const tempScore2 = document.getElementById('player-2');
+    tempScore2.textContent = "67";
+
+    //Player 3
+    const tempScore3 = document.getElementById('player-3');
+    tempScore3.textContent = "42";
+}
+
 // Function to update the timer display
 function updateTimerDisplay(seconds) {
     const timerDisplay = document.getElementById('player-timer');
@@ -48,6 +62,7 @@ function startTimer() {
                 if (clickCount > highScore) {
                     highScore = clickCount;
                     updateLifetimeHighScore();
+                    updatePlayersScores();//web socket placeholder for other player's score update.
                 }
             }
         }, 1000);
