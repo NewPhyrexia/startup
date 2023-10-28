@@ -59,10 +59,10 @@ function startTimer() {
             } else if (seconds === 0) {
                 updateTimerDisplay("T_T");
                 customButton.disabled = true;
+                updatePlayersScores();//web socket placeholder for other player's score update.
                 if (clickCount > highScore) {
                     highScore = clickCount;
                     updateLifetimeHighScore();
-                    updatePlayersScores();//web socket placeholder for other player's score update.
                 }
             }
         }, 1000);
