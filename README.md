@@ -62,3 +62,12 @@ For this deliverable I properly styled the application into its final appearance
 - **Application elements** - Used good contrast of darker colors
 - **Application text content** - Consistent fonts
 - **Application images** - Still don't have images and so no styling here.
+
+## JavaScript deliverable
+
+For this deliverable I implemented by JavaScript so that the application works for a single user. I also added placeholders for future technology.
+
+- **login** - When you press enter or the login button it takes you to the tapbattle page.
+- **database** - Upon login a player object is created with a name and lifetimeHighScore. When the player beats their high score the lifetimeHighScore variable in the player object is updated.
+- **WebSocket** - I caused the other player's scores to populate after the timer ends. This will be replaced with WebSocket messages later.
+- **application logic** - A time begins when the tap button is pressed for the first time. As teh timer is running the score counter increases on every click. If the score beats the highscore the highscore will reflect the new highscore.
