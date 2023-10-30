@@ -3,6 +3,8 @@
 * css: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/css.md
 * html: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/html.md
 * javascript: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/javascript.md
+* webServers: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/webServers.md
+* webServices: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/webServices.md
 
 # Notes (Other)
 * I learned hot to set up git and commit and then push to github.
