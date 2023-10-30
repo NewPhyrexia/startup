@@ -99,3 +99,59 @@
 
 23. Is it possible to add new properties to JavaScript objects?
     - Yes, it is possible to add new properties
+
+Sure, here are the answers to your questions:
+
+24. If you want to include JavaScript on an HTML page, which tag do you use?
+   - To include JavaScript in an HTML page, you typically use the `<script>` tag. You can place JavaScript code within the `<script>` element directly in your HTML file or link to an external JavaScript file using the `<script>` tag's `src` attribute.
+
+25. Given the following HTML, what JavaScript could you use to set the text "animal" to "crow" and leave the "fish" text unaffected?
+   - You can use JavaScript to select and modify the text content of elements. Here's an example:
+     ```javascript
+     document.getElementById("animal").textContent = "crow";
+     ```
+
+26. Which of the following correctly describes JSON?
+   - JSON (JavaScript Object Notation) is a lightweight data interchange format. It is often used to transmit data between a server and a web application as text. JSON is a text-based format that consists of key-value pairs and is easy for humans to read and write. It is a common data format with a syntax similar to JavaScript objects.
+
+27. What does the console command chmod, pwd, cd, ls, vim, nano, mkdir, mv, rm, man, ssh, ps, wget, sudo do?
+   - Here's a brief description of each command:
+     - `chmod`: Used to change file permissions.
+     - `pwd`: Prints the current working directory.
+     - `cd`: Changes the current directory.
+     - `ls`: Lists the files and directories in the current directory.
+     - `vim` and `nano`: Text editors used to edit files in the terminal.
+     - `mkdir`: Creates a new directory.
+     - `mv`: Moves or renames files or directories.
+     - `rm`: Removes files or directories.
+     - `man`: Displays manual pages for Unix commands.
+     - `ssh`: Connects to a remote server using SSH (Secure Shell).
+     - `ps`: Displays information about running processes.
+     - `wget`: Downloads files from the internet.
+     - `sudo`: Executes a command with superuser privileges.
+
+28. Which of the following console command creates a remote shell session?
+   - The `ssh` command is used to create a remote shell session by connecting to a remote server over a network using the Secure Shell protocol.
+
+29. Which of the following is true when the -la parameter is specified for the ls console command?
+   - When the `ls -la` command is used, it lists all files (including hidden files) in a directory along with detailed information about each file, such as permissions, ownership, size, and modification date.
+
+30. Which of the following is true for the domain name banana.fruit.bozo.click, which is the top-level domain, which is a subdomain, which is a root domain?
+   - In the domain name "banana.fruit.bozo.click":
+     - "click" is the top-level domain (TLD).
+     - "fruit" is a subdomain of "bozo.click."
+     - "bozo.click" is a subdomain of "click."
+
+31. Is a web certificate necessary to use HTTPS?
+   - Yes, a web certificate (commonly referred to as an SSL/TLS certificate) is necessary to use HTTPS (Hypertext Transfer Protocol Secure). The certificate provides encryption and authentication for secure data transmission over the internet. It ensures that data exchanged between a web server and a client is secure and protected from eavesdropping and tampering.
+
+32. Can a DNS A record point to an IP address or another A record?
+   - A DNS A record (Address record) is used to map a domain name to an IPv4 address. An A record points directly to an IP address. It cannot directly point to another A record. To create a chain of redirection or aliasing, other types of DNS records like CNAME (Canonical Name) or ALIAS records are used.
+
+33. Port 443, 80, 22 is reserved for which protocol?
+    - Port 443 is typically reserved for HTTPS (secure web traffic).
+    - Port 80 is commonly used for HTTP (unsecured web traffic).
+    - Port 22 is reserved for SSH (Secure Shell) protocol.
+
+34. What will the following code using Promises output when executed?
+    - To provide an answer, I would need to see the specific code that uses Promises. Please provide the code, and I'll be happy to explain the expected output.
