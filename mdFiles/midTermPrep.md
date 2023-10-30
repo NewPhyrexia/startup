@@ -14,19 +14,83 @@
    - I would need to see the specific HTML and CSS code provided.
 
 6. What does the following padding CSS do?
-   - You need to provide the specific CSS code to determine what the padding is doing.
+   
+         - **CSS padding** is a property that allows you to control the spacing between the content of an HTML element and its border. It defines the distance between the content and the inner edges of the element's border box. Padding can be applied to all HTML elements and is used to create space around an element's content, making it visually more appealing and providing separation from neighboring elements.
+      
+      The `padding` property can be set in various ways:
+      
+      1. **One Value**: Setting a single value applies the same padding to all four sides of the element (top, right, bottom, and left).
+      
+         ```css
+         padding: 10px; /* Applies 10px of padding to all sides */
+         ```
+      
+      2. **Two Values**: Specifying two values applies the first value to the top and bottom, and the second value to the left and right.
+      
+         ```css
+         padding: 10px 20px; /* 10px padding on top and bottom, 20px padding on left and right */
+         ```
+      
+      3. **Four Values**: Providing four values sets the padding individually for each side (top, right, bottom, left) in the specified order.
+      
+         ```css
+         padding: 10px 20px 15px 5px; /* 10px top, 20px right, 15px bottom, 5px left */
+         ```
+      
+      The `padding` property can also be used in conjunction with other properties, such as `padding-top`, `padding-right`, `padding-bottom`, and `padding-left`, to control padding for individual sides.
+      
+      Padding is an essential tool for controlling the spacing and layout of web page elements and is commonly used in CSS to enhance the visual design and readability of content.
 
 7. What does the following code using arrow syntax function declaration do?
-   - You need to provide the specific JavaScript code to explain what the arrow function is doing.
+            - In JavaScript, arrow functions provide a concise way to declare functions. They were introduced in ECMAScript 6 (ES6) and are commonly used for creating anonymous functions. Here's how you can use the arrow syntax for function declarations in JavaScript:
+      
+      ```javascript
+      (parameters) => expression
+      ```
+      
+      Here's a breakdown of the components:
+      
+      1. `parameters`: This part represents the input parameters to the arrow function, which are enclosed in parentheses. If the arrow function takes no parameters, you can use an empty pair of parentheses: `()`. If it takes one parameter, you can omit the parentheses around the parameter name. For multiple parameters, separate them with commas.
+      
+      2. `=>`: This is the arrow symbol, which separates the parameters from the expression.
+      
+      3. `expression`: The body of the arrow function, which is a single expression that can be executed. If the expression is simple and one-liner, you can omit the curly braces `{}`. If you need multiple statements, you should use curly braces to create a block.
+      
+      Here are a few examples:
+      
+      **1. Arrow function with no parameters:**
+      ```javascript
+      () => "Hello, World!"
+      ```
+      
+      **2. Arrow function with one parameter:**
+      ```javascript
+      name => "Hello, " + name
+      ```
+      
+      **3. Arrow function with multiple parameters:**
+      ```javascript
+      (x, y) => x + y
+      ```
+      
+      **4. Arrow function with a block of statements:**
+      ```javascript
+      (x, y) => {
+          let sum = x + y;
+          return "The sum is: " + sum;
+      }
+      ```
+      
+      Arrow functions are commonly used for short and simple functions. They have a more concise syntax compared to traditional function expressions and do not bind their own `this` value, which can be useful in certain situations. Arrow functions are especially popular when working with array methods like `map`, `filter`, and `reduce`, and in the context of callbacks and event handlers.
 
 8. What does the following code using map with an array output?
-   - You need to provide the specific JavaScript code and array to determine the output.
+   - specific JavaScript code and array needed to determine the output.
 
 9. What does the following code output using getElementByID and addEventListener?
-   - You need to provide the specific HTML and JavaScript code to determine the output.
+   - specific HTML and JavaScript code needed to determine the output.
 
 10. What does the following line of JavaScript do using a # selector?
-    - You need to provide the specific JavaScript code to explain the functionality of the # selector.
+    - specific JavaScript code needed to explain the functionality of the # selector.
 
 11. Which of the following are true? (mark all that are true about the DOM)
     - You need to provide a list of statements related to the Document Object Model (DOM) for us to determine which are true.
@@ -44,7 +108,7 @@
     - The CSS box model layers, from inside to outside, are Content, Padding, Border, and Margin.
 
 16. Given the following HTML, what CSS would you use to set the text "troubl" to green and leave the "double" text unaffected?
-    - You need to provide the specific HTML code to determine the CSS rule for selecting "troubl."
+    - specific HTML code needed to determine the CSS rule for selecting "troubl."
 
 17. What will the following code output when executed using a for loop and console.log?
     - You need to provide the specific JavaScript code to determine the output.
@@ -154,4 +218,4 @@ Sure, here are the answers to your questions:
     - Port 22 is reserved for SSH (Secure Shell) protocol.
 
 34. What will the following code using Promises output when executed?
-    - To provide an answer, I would need to see the specific code that uses Promises. Please provide the code, and I'll be happy to explain the expected output.
+    - specific code that uses Promises needed.
