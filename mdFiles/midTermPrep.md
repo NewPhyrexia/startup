@@ -1,7 +1,3 @@
-I can provide answers to your questions, but I cannot create Word documents directly in this text-based interface. However, I can provide you with the answers to these questions in plain text, and you can copy and paste them into a Word document. If you have any specific formatting requirements for the Word document, please let me know, and I can provide guidance on how to format the text in Word.
-
-Here are the answers to your questions:
-
 1. In the following code, what does the link element do?
    - The link element is used to link an external resource, such as a stylesheet or a favicon, to an HTML document.
 
