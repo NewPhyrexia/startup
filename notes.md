@@ -5,7 +5,6 @@
 * javascript: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/javascript.md
 * webServers: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/webServers.md
 * webServices: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/webServices.md
-* Midtermprep: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/midTermPrep.md
 
 # Notes (Other)
 * I learned how to set up git, commit and then push to github.
