@@ -1,5 +1,8 @@
 # Note Topics
-*
+* essentials: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/essentials.md
+* css: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/css.md
+* html: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/html.md
+* javascript: https://github.com/NewPhyrexia/startup/blob/main/mdFiles/javascript.md
 
 # Notes (Other)
 * I learned hot to set up git and commit and then push to github.
