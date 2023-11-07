@@ -1295,3 +1295,698 @@ Create a web service with Express using the following steps.
    ![HTTP request](httpRequestSequenceDiagram.jpg)
 
 When you are done executing the above commands, copy the output from the curl commands and paste it into the Canvas assignment.
+
+# Debugging Node.js
+
+🔑 **Required reading**: [Debugging a Node.js application](https://youtu.be/B0le_Z_2TQY)
+
+📖 **Deeper dive reading**: [Node.js debugging in VS Code](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)
+
+Previously your JavaScript debugging was done by running the `Live Server` VS Code extension and using the browser's debugging tools as it executed in the browser. Now that you are writing JavaScript that runs using Node.js, you need a way to launch and debug your code that runs outside of the browser. One great way to do that is to use the debugging tools built into VS Code. To debug JavaScript in VS Code you first need some JavaScript to debug. Open up VS Code and create a new file named `main.js` and paste the following code into the file.
+
+```js
+let x = 1 + 1;
+
+console.log(x);
+
+function double(x) {
+  return x * 2;
+}
+
+x = double(x);
+
+console.log(x);
+```
+
+You can now debug `main.js` in VS Code by executing the `Start Debugging` command by pressing `F5`. The first time you run this, VS Code will ask you what debugger you want to use. Select `Node.js`.
+
+![Debug start](webServicesDebugStart.png)
+
+The code will execute and the debug console window will automatically open to show you the debugger output where you can see the results of the two `console.log` statements found in the code.
+
+![Debug output](webServicesDebugOutput.png)
+
+You can pause execution of the code by setting a breakpoint. Move your cursor over to the far left side of the editor window. As you hover on the left side of the line numbers you will see a red dot appear. Click on the dot to set the breakpoint.
+
+![Debug output](webServicesDebugBreakpoint.png)
+
+Now start the debugger again by pressing `F5`. The code will start running, but pause on the line with the breakpoint. You can then see the values of variables by looking at the variable window on the left, or by hovering your mouse over the variable you would like to inspect.
+
+![Debug pause](webServicesDebugPaused.png)
+
+You can continue execution of the code by pressing `F10` to step to the next line, `F11` to step into a function call, or `F5` to continue running from the current line. When the last line of code executes the debugger will automatically exit and you will need to press `F5` to start it running again. You can stop debugging at any time by pressing `SHIFT-F5`.
+
+Experiment with this simple file until you are comfortable running the debugger, setting breakpoints, and inspecting variables.
+
+## Debugging a Node.js web service
+
+In order to debug a web service running under Node.js we first need to write our code. Replace the code in your `main.js` file with the following.
+
+```js
+const express = require('express');
+const app = express();
+
+app.get('/*', (req, res) => {
+  res.send({ url: req.originalUrl });
+});
+
+const port = 8080;
+app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
+});
+```
+
+Switch to your console application and run `npm init -y` and `npm install express` from your code directory so that we can use the Express package to write a simple web service.
+
+Now we are ready to debug again. Set a breakpoint on the getStore endpoint callback (line 5) and the `app.listen` call (line 9). Start debugging by pressing `F5`. The debugger should stop on the `listen` call where you can inspect the `app` variable. Press `F5` again to continue running. Now open up your browser and set the location to `localhost:8080`. This should hit the breakpoint on the endpoint. Take some time to inspect the `req` object. You should be able to see what the HTTP method is, what parameters are provided, and what the path currently is. Press `F5` to continue.
+
+Your browser should display the JSON object, containing the URL, that you returned from your endpoint. Now change the URL in the browser to include a path and some query parameters. Something like `http://localhost:8080/fish/taco?order=2`. Requesting that URL should cause your breakpoint to hit again where you can see the URL changes reflected in the req object.
+
+Now, instead of pressing `F5` to continue, press `F11` to step into the `res.send` function. This will take you out of your code and into the Express code that handles sending a response. Because you installed the Express package using NPM, all of Express's source code is sitting in the `node_modules` directory. You can also set breakpoints there, examine variables, and step into functions. Debugging into popular packages is a great way to learn how to code by seeing how really good programmers do things. Take some time to walk around Holowaychuk's code and see if you can understand what it is doing.
+
+![Debug step in](webServicesDebugStepIn.png)
+
+## Nodemon
+
+Once you start writing complex web applications you will find yourself making changes in the middle of debugging sessions and you would like to have `node` restart automatically and update the browser as the changes are saved. This seems like a simple thing, but over the course of hundreds of changes, every second you can save really starts to add up.
+
+The [Nodemon package](https://www.npmjs.com/package/nodemon) is basically a wrapper around `node` that watches for files in the project directory to change. When it detects that you saved something it will automatically restart `node`.
+
+If you would like to experiment with this then take the following steps. First install Nodemon globally so that you can use it to debug all of your projects.
+
+```sh
+npm install -g nodemon
+```
+
+Then, because VS Code does not know how to launch Nodemon automatically, you need create a VS Code launch configuration. In VS Code press `CTRL-SHIFT-P` (on Windows) or `⌘-SHIFT-P` (on Mac) and type the command `Debug: Add configuration`. This will then ask you what type of configuration you would like to create. Type `Node.js` and select the `Node.js: Nodemon setup` option. In the launch configuration file that it creates, change the program from `app.js` to `main.js` (or whatever the main JavaScript file is for your application) and save the configuration file.
+
+Now when you press `F5` to start debugging it will run Nodemon instead of Node.js, and your changes will automatically update your application when you save.
+
+# PM2
+
+When you run a program from the console, the program will automatically terminate when you close the console or if the computer restarts. In order to keep programs running after a shutdown you need to register it as a `daemon`. The term daemon comes from the idea of something that is always there working in the background. Hopefully you only have good daemons running in your background.
+
+We want our web services to continue running as a daemon. We would also like an easy way to start and stop our services. That is what [Process Manager 2](https://pm2.keymetrics.io/docs/usage/quick-start/) (PM2) does.
+
+PM2 is already installed on your production server as part of the AWS AMI that you selected when you launched your server. Additionally, the deployment scripts found with the Simon projects automatically modify PM2 to register and restart your web services. That means you should not need to do anything with PM2. However, if you run into problems such as your services not running, then here are some commands that you might find useful.
+
+You can SSH into your server and see PM2 in action by running the following command.
+
+```sh
+pm2 ls
+```
+
+This should print out the two services, simon and startup, that are configured to run on your web server.
+
+You can try some of the other commands, but only if you understand what they are doing. Using them incorrectly could cause your web services to stop working.
+
+| Command                                                    | Purpose                                                                          |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| **pm2 ls**                                                 | List all of the hosted node processes                                            |
+| **pm2 monit**                                              | Visual monitor                                                                   |
+| **pm2 start index.js -n simon**                            | Add a new process with an explicit name                                          |
+| **pm2 start index.js -n startup -- 4000**                  | Add a new process with an explicit name and port parameter                       |
+| **pm2 stop simon**                                         | Stop a process                                                                   |
+| **pm2 restart simon**                                      | Restart a process                                                                |
+| **pm2 delete simon**                                       | Delete a process from being hosted                                               |
+| **pm2 delete all**                                         | Delete all processes                                                             |
+| **pm2 save**                                               | Save the current processes across reboot                                         |
+| **pm2 restart all**                                        | Reload all of the processes                                                      |
+| **pm2 restart simon --update-env**                         | Reload process and update the node version to the current environment definition |
+| **pm2 update**                                             | Reload pm2                                                                       |
+| **pm2 start env.js --watch --ignore-watch="node_modules"** | Automatically reload service when index.js changes                               |
+| **pm2 describe simon**                                     | Describe detailed process information                                            |
+| **pm2 startup**                                            | Displays the command to run to keep PM2 running after a reboot.                  |
+| **pm2 logs simon**                                         | Display process logs                                                             |
+| **pm2 env 0**                                              | Display environment variables for process. Use `pm2 ls` to get the process ID    |
+
+## Registering a new web service
+
+If you want to setup another subdomain that accesses a different web service on your web server, you need to follow these steps.
+
+1. Add the rule to the Caddyfile to tell it how to direct requests for the domain.
+2. Create a directory and add the files for the web service.
+3. Configure PM2 to host the web service.
+
+### Modify Caddyfile
+
+SSH into your server.
+
+Copy the section for the startup subdomain and alter it so that it represents the desired subdomain and give it a different port number that is not currently used on your server. For example:
+
+```sh
+tacos.cs260.click {
+  reverse_proxy _ localhost:5000
+  header Cache-Control none
+  header -server
+  header Access-Control-Allow-Origin *
+}
+```
+
+This tells Caddy that when it gets a request for tacos.cs260.click it will act as a proxy for those requests and pass them on to the web service that is listening on the same machine (localhost), on port 5000. The other settings tell Caddy to return headers that disable caching, hide the fact that Caddy is the server (no reason to tell hackers anything about your server), and to allow any other origin server to make endpoint requests to this subdomain (basically disabling CORS). Depending on what your web service does you may want different settings.
+
+Restart Caddy to cause it to load the new settings.
+
+```sh
+sudo service caddy restart
+```
+
+Now Caddy will attempt to proxy the requests, but there is no web service listening on port 5000 and so you will get an error from Caddy if you make a request to tacos.cs260.click.
+
+### Create the web service
+
+Copy the `~/services/startup` directory to a directory that represents the purpose of your service. For example:
+
+```sh
+cp -r ~/services/startup ~/services/tacos
+```
+
+If you list the directory you should see an `index.js` file that is the main JavaScript file for your web service. It has the code to listen on the designated network port and respond to requests. The following is the JavaScript that causes the web service to listen on a port that is provided as an argument to the command line.
+
+```js
+const port = process.argv.length > 2 ? process.argv[2] : 3000;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
+```
+
+There is also a directory named `public` that has static HTML/CSS/JavaScript files that your web service will respond with when requested. The `index.js` file enables this with the following code:
+
+```js
+app.use(express.static('public'));
+```
+
+You can start up the web service, listening on port 5000, using Node as follows.
+
+```sh
+node index.js 5000
+```
+
+You can now access your web service through the browser, or `curl`.
+
+```sh
+curl https://tacos.cs260.click
+```
+
+Caddy will receive the request and map the subdomain name, tacos.cs260.click, to a request for http://localhost:5000. Your web service is listening on port 5000 and so it receives the request and responds.
+
+Stop your web service by pressing CTRL-C in the SSH console that you used to start the service. Now your browser request for your subdomain should return an error again.
+
+### Configure PM2 to host the web service
+
+The problem with running your web service from the console with `node index.js 5000`, is that as soon as you close your SSH session it will terminate all processes you started in that session, including your web service. Instead you need something that is always running in the background to run your web service. This is where daemons come into play. The daemon we use to do this is called PM2.
+
+From your SSH console session run:
+
+```sh
+pm2 ls
+```
+
+This will list the web services that you already have registered with PM2. To run your newly created web service under PM2, make sure you are in your service directory, and run the command similar to the following, with the service name and port substituted to your desired values:
+
+```sh
+cd ~/services/tacos
+pm2 start index.js -n tacos -- 5000
+pm2 save
+```
+
+If you run `pm2 ls` again you should see your web service listed. You can now access your subdomain in the browser and see the proper response. PM2 will keep running your service even after you exit your SSH session.
+
+# UI testing
+
+[Test driven development](https://www.freecodecamp.org/news/test-driven-development-what-it-is-and-what-it-is-not-41fa6bca02a2/) (TDD) is a proven methodology for accelerating application creation, protecting against regression bugs, and demonstrating correctness. TDD for console based applications and server based code is fairly straight forward. Web application UI code is significantly more complex to test, and using automated tests to drive your UI development is even more difficult.
+
+The problem is that a browser is required to execute UI code. That means you have to actually test the application in the browser. Additionally, every one of the major browsers behaves slightly differently, viewport size makes a big difference, all the code executes asynchronously, network disruptions are common, and then there is the human factor. A human will interact with the browser in very unexpected ways. Clicking where they shouldn't, clicking rapidly, randomly refreshing the browser, flushing cache, not flushing cache, leaving the application up for days on end, switching between tabs, opening the application multiple times, logging in on different tabs, logging out of one tab while still using the application on another tab, or ... on and on. And we haven't even talked about running all the different browsers on all of the possible devices.
+
+Of course the alternative to not test your code doesn't work either. That only means that you have to manually test everything every time you make any change, or you let your users test everything. That is not a good recipe for long term success.
+
+Fortunately this is a problem that many strong players have been working on for decades now, and the solutions, while not perfect, are getting better and better. We will look at two of these solutions. One is for executing automated tests in the browser, and the other is for testing on different browsers and devices.
+
+## Automating the browser - Playwright
+
+📖 **Deeper dive reading**: [Playwright and VS Code](https://playwright.dev/docs/getting-started-VSCode)
+
+No one understands the difficulty of testing applications in a browser better than the companies that build web browsers. They have to test every possible use of HTML, CSS, and JavaScript that a user could think of. There is no way that manual testing is going to work and so early on they started putting hooks into their browsers that allowed them to be driven from automated external processes. [Selenium](https://www.selenium.dev/) was introduced in 2004 as the first popular tool to automate the browser. However, Selenium is generally considered to be flaky and slow. Flakiness means that a test fails in unpredictable, unreproducible ways. When you need thousands of tests to pass before you can deploy a new feature, even a little flakiness becomes a big problem. If those tests take hours to run then you have an even bigger problem.
+
+The market now has lots of alternatives when considering which automated browser framework to use. [State of JS](https://stateofjs.com/) includes statistics on how popular these frameworks are. With frameworks coming and going all of the time, one telling statistic is the frameworks' ability to retain users.
+
+![State of JS testing](javascriptStateOfJsTesting.jpg)
+
+— Retention of browser based testing frameworks (**Source**: _2021.stateofjs.com_)
+
+For the purposes of this instruction, we could pick any of the top contenders. However, we are going to pick a newcomer, [Playwright](https://playwright.dev/). Playwright has some major advantages. It is backed by Microsoft, it integrates really well with VS Code, and it runs as a Node.js process. It is also considered one of the least flaky of the testing frameworks.
+
+As a demonstration of using Playwright, consider the following simplified HTML file containing a button that changes the paragraph text. The button calls a JavaScript function defined in a script element located in the HTML file.
+
+```HTML
+<body>
+  <p id="welcome" data-testid="msg">Hello world</p>
+  <button onclick="changeWelcome()">change welcome</button>
+  <script>
+    function changeWelcome() {
+      const welcomeEl = document.querySelector('#welcome');
+      welcomeEl.textContent = 'I feel welcomed';
+    }
+  </script>
+</body>
+```
+
+First, you need to install Playwright. In your project directory, use NPM to download the Playwright packages, install the browser drivers, configure your project, and create a couple example test files.
+
+```sh
+npm init playwright@latest
+```
+
+Next, you want to install the Playwright extension for VS Code. Go to the extensions tab in VS Code and search for, and install, `Playwright Test for VSCode`.
+
+You can now write your first Playwright test. Take the following and paste it over the `tests/example.spec.js` file that the Playwright install created.
+
+```js
+import { test, expect } from '@playwright/test';
+
+test('testWelcomeButton', async ({ page }) => {
+  // Navigate to the welcome page
+  await page.goto('http://localhost:5500/');
+
+  // Get the target element and make sure it is in the correct starting state
+  const hello = page.getByTestId('msg');
+  await expect(hello).toHaveText('Hello world');
+
+  // Press the button
+  const changeBtn = page.getByRole('button', { name: 'change welcome' });
+  await changeBtn.click();
+
+  // Expect that the change happened correctly
+  await expect(hello).toHaveText('I feel not welcomed');
+});
+```
+
+This test makes sure you can successfully navigate to the desired page, that the page contains the desired elements, that you can press the button and the text changes as expected.
+
+Before you run the test, you actually need your application running for the test to execute against. You can do this by using the VS Code Live Server extension, or if you are testing a Node.js based service then run `npm run start`. You can actually add configuration to your tests so that your application is started when your tests run, but for now, just start up your application before you run the test.
+
+To run the test in VS Code, select the `Test Explorer` tab. You should see your test listed in the explorer. Select the `example.spec.ts` test and press the play button. This will start the test, launch a browser, run the test code to interact with the browser, and display the result. In this case our test fails because it is expecting the resulting text to be `I feel not welcomed` when it actually displays `I feel welcomed`.
+
+The following image should be similar to what you see. You can see the listing of tests on the left and the JavaScript based test in the editor window on the right. When a test fails, the editor window displays a clear description of what went wrong. You can even debug the tests as they execute just like you would any other Node.js based JavaScript execution.
+
+![Playwright](javaScriptPlaywright.png)
+
+You can fix the test by either changing `index.html` or `test/example.spec.js` so that the text matches. Once you have done that you can run the test again and the test explorer should display a green check box.
+
+This is just a simple example of the powerful functionality of Playwright. You are encouraged to explore its functionality and even add some tests to your projects. Once you have gained some competency with Playwright you will find that you can write your code faster and feel more confident when changing things around.
+
+## Testing various devices - BrowserStack
+
+With the ability to run automated UI tests, we now turn our attention to testing on the multitude of various devices. There are several services out there that help with this. One of these is [BrowserStack](https://www.browserstack.com/). BrowserStack lets you pick from a long list of physical devices that you can run interactively, or use when driving automated tests with Selenium. The image below only shows a partial list of iPhone devices. BrowserStack also has devices for Android, Mac, and Windows.
+
+![BrowserStack devices](javaScriptBrowserStackDevices.png)
+
+When you launch a device it connects the browser interface to a physical device hosted in a data center. You can then use the device to reproduce user reported problems, or validate that your implementation works on that specific device. The following image shows the use of BrowserStack to experiment with an iPhone 14 running iOS 16.
+
+![BrowserStack iPhone](javaScriptBrowserStackIPhone.png)
+
+BrowserStack offers free trials if you would like to see how your startup application works on a specific device.
+
+# Endpoint testing
+
+Using test driven development (TDD) for testing service endpoints is a common industry practice. Testing services is usually easier than writing UI tests because it does not require a browser. However, it does still take effort to learn how to write tests that are effective and efficient. Making this a standard part of your development process will give you a significant advantage as you progress in your professional career.
+
+As demonstrated by the following [State of JS](https://2021.stateofjs.com/en-US/libraries/testing/) survey, there are lots of good testing packages that work well with Express driven services. We are going to look at the current champion [Jest](https://jestjs.io/).
+
+![State of JS Testing](webServicesStateOfJsEndpointTesting.jpg)
+
+To get started with Jest we need a simple web service. In a console window, create a test directory, install Express, and open up VS Code.
+
+```sh
+mkdir testJest
+cd testJest
+npm init -y
+npm install express
+code .
+```
+
+Now create a file named `server.js` and use Express to create an application with two endpoints: one to get a store (getStore), and another to update a store.
+
+**server.js**
+
+```js
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+// Endpoints
+app.get('/store/:storeName', (req, res) => {
+  res.send({ name: req.params.storeName });
+});
+
+app.put('/store/:storeName', (req, res) => {
+  req.body.updated = true;
+  res.send(req.body);
+});
+
+module.exports = app;
+```
+
+In order to allow Jest to start up the HTTP server when running tests, we initialize the application a little bit differently than we have in the past. Normally, we would have just started listening on the Express `app` object after we defined our endpoints. Instead we export the Express `app` object from our `server.js` file and then import the app object in the `index.js` file that is used to run our service.
+
+**index.js**
+
+```js
+const app = require('./server');
+
+const port = 8080;
+app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
+});
+```
+
+Breaking apart the definition of the service from the starting of the service allows us to start the service both when we run normally and also when using our testing framework.
+
+![Jest endpoint requests](endpointTestingJest.jpg)
+
+You can test that the service is working properly by running the service in the VS Code debugger and pressing F5 while viewing the `index.js` file. Then open a browser and navigate to `http://localhost:8080/store/provo`. Stop the debugging session once you have demonstrated that the service is working correctly.
+
+To launch the service using Jest we create another file that has a suffix of `.test.js`. Any file with that suffix is considered a testing file and will automatically be discovered by Jest and examined for tests to run.
+
+## A simple test
+
+Before we write tests for our endpoints we will write a simple test that demonstrates how Jest works. A test is created by calling the Jest `test` function. Note that you don't need to include a `require` statement to import Jest functions into your code. Jest will automatically import itself when it discovers a test file.
+
+Let's make our first test by creating a file named `store.test.js` and pasting in the following code.
+
+**store.test.js**
+
+```js
+test('that equal values are equal', () => {
+  expect(false).toBe(true);
+});
+```
+
+The `test` function takes a description as the first parameter. The description is meant to be human readable. In this case it reads: "test that equal values are equal". The second parameter is the function to call. Our function just calls the Jest `expect` function and chains it to the `toBe` function. You can read this as "expect false to be true", which of course is not true, but we want to see our test fail the first time we run it. We will fix this later so that we can show what happens when a test succeeds.
+
+In order to run the test we need to install the Jest package using NPM. From the console install the package. The `-D` parameter tells NPM to install Jest as a development package. That keeps it from being included when we do production release builds.
+
+```sh
+npm install jest -D
+```
+
+Now, replace the `scripts` section of the `package.json` file with a new command that will run our tests with Jest.
+
+```json
+"scripts": {
+  "test": "jest"
+},
+```
+
+With that in place we can run the `test` command and our test will execute. Notice that Jest shows exactly where the test failed and what expected values were not received.
+
+```sh
+➜ npm run test
+
+ FAIL  ./store.test.js
+  ✕ that unequal values are not equal (1 ms)
+
+  ● that unequal values are not equal
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      3 |
+      4 | test('that unequal values are not equal', () => {
+    > 5 |   expect(false).toBe(true);
+        |                 ^
+      6 | });
+      7 |
+      8 | // describe('endpoints', () => {
+
+      at Object.toBe (store.test.js:5:17)
+
+Tests:       1 failed, 1 total
+```
+
+We can then fix our test by rewriting it so that the expected value matches the provided value.
+
+**store.test.js**
+
+```js
+test('that equal values are equal', () => {
+  expect(true).toBe(true);
+});
+```
+
+This time when we run the test it passes.
+
+```sh
+➜  npm run test
+
+ PASS  ./store.test.js
+  ✓ that equal values are equal (1 ms)
+
+Tests:       1 passed, 1 total
+```
+
+Note that this example didn't actually test any of our code, but it does demonstrate how easy it is to write tests. A real test function would call code in your program. Let's do this by actually making calls to our endpoints.
+
+## Testing endpoints
+
+To test our endpoints we need another package so that we can make HTTP requests without having to actually send them over the network. This is done with the NPM package called `supertest`. Go ahead and install this now.
+
+```sh
+npm install supertest -D
+```
+
+We can then alter `store.test.js` to import our Express service and also the `request` function from `supertest` that we will use to make HTTP requests.
+
+To make an HTTP request you pass the Express `app` to the `supertest` `request` function and then chain on the HTTP verb function that you want to call, along with the endpoint path. You can then chain on as many `expect` functions as you would like. In the following example we will expect an HTTP status code of 200 (OK), and that the body of the response contains the object that we expect the endpoint to return.
+
+If something goes wrong, the `end` function will contain an error and we pass the error along to the `done` function. Otherwise we just call `done` without the error.
+
+**store.test.js**
+
+```js
+const request = require('supertest');
+const app = require('./server');
+
+test('getStore returns the desired store', (done) => {
+  request(app)
+    .get('/store/provo')
+    .expect(200)
+    .expect({ name: 'provo' })
+    .end((err) => (err ? done(err) : done()));
+});
+```
+
+When we run this test we see that it passes without error.
+
+```sh
+➜  npm run test
+
+ PASS  ./store.test.js
+  ✓ getStore returns the desired store (16 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.237 s, estimated 1 s
+```
+
+You can change the test to expect a status code of 500 (Server Error) if you want to see the test fail. You can also change the endpoint code to return a 201 status code (Created) and also see the test fail.
+
+Now we can add a test for the updateStore endpoint. To do this we can copy the getStore endpoint, change the description, change the HTTP function verb to `put`, and send the body of the `put` request using the chained `send` function.
+
+```js
+const request = require('supertest');
+const app = require('./server');
+
+test('updateStore saves the correct values', (done) => {
+  request(app)
+    .put('/store/provo')
+    .send({ items: ['fish', 'milk'] })
+    .expect(200)
+    .expect({ items: ['fish', 'milk'], updated: true })
+    .end((err) => (err ? done(err) : done()));
+});
+
+test('getStore returns the desired store', (done) => {
+  request(app)
+    .get('/store/provo')
+    .expect(200)
+    .expect({ name: 'provo' })
+    .end((err) => (err ? done(err) : done()));
+});
+```
+
+The great thing about test driven development (TDD) is that you can actually write your tests first and then write your code based upon the design represented by the tests. When your tests pass you know your code is complete. Additionally, when you make later modifications to your code you can simply run your tests again. If they pass then you can be confident that your code is still working without having to manually test everything yourself. With systems that have hundreds of endpoints and hundreds of thousands of lines of code, TDD becomes an indispensable part of the development process.
+
+# Simon Service
+
+![Simon](../simon.png)
+
+This deliverable demonstrates converting the JavaScript application into a web application by implementing a web service that listens on a network port for HTTP requests. The web service provides endpoints for getting and updating the scores. The application also uses a couple third party endpoints to display inspirational quotes on the about page and show a random header image.
+
+We will use Node.js and Express to create our HTTP service.
+
+You can view this application running here: [Example Simon Service](https://simon-service.cs260.click)
+
+![Simon Service](simonService.jpg)
+
+## Service endpoint definitions
+
+Here is our design, documented using `curl` commands, for the two endpoints that the Simon web service provides.
+
+**GetScores** - Get the latest high scores.
+
+```sh
+curl -X GET /api/scores
+
+#Response
+{ "scores":[
+  {"name":"Harvey", "score":"337", "date":"2022/11/20"},
+  {"name":"도윤 이", "score":"95", "date":"2019/05/20"}
+]}
+```
+
+**SubmitScore** - Submit a score for consideration in the list of high scores.
+
+```sh
+curl -X POST /api/score -d '{"name":"Harvey", "score":"337", "date":"2022/11/20"}'
+
+#Response
+{ "scores":[
+  {"name":"Harvey", "score":"337", "date":"2022/11/20"},
+  {"name":"도윤 이", "score":"95", "date":"2019/05/20"}
+]}
+```
+
+## Third party endpoints
+
+The `about.js` file contains code for making calls to third party endpoints using `fetch`. We make one call to `picsum.photos` to get a random picture and another to `quotable.io` to get a random quote. Once the endpoint asynchronously returns, the DOM is updated with the requested data. Here is an example of the quote endpoint call.
+
+```js
+function displayQuote(data) {
+  fetch('https://api.quotable.io/random')
+    .then((response) => response.json())
+    .then((data) => {
+      const containerEl = document.querySelector('#quote');
+
+      const quoteEl = document.createElement('p');
+      quoteEl.classList.add('quote');
+      const authorEl = document.createElement('p');
+      authorEl.classList.add('author');
+
+      quoteEl.textContent = data.content;
+      authorEl.textContent = data.author;
+
+      containerEl.appendChild(quoteEl);
+      containerEl.appendChild(authorEl);
+    });
+}
+```
+
+## Steps to convert Simon to a service
+
+Converting Simon to a service involved the following steps.
+
+1. Move all the previous deliverable code files (_.html, _.js, \*.css, favicon.ico, and assets) into a sub-directory named `public`. We will use the HTTP Node.js based service to host the frontend application files. This is done with the static file middleware that we will add our service `index.js`.
+
+   ```js
+   app.use(express.static('public'));
+   ```
+
+   When running our service the static file middleware takes care of reading the frontend code from the `public` directory and returning it to the browser. The service only directly handles the endpoint requests.
+
+   ![Simon service](../simonReact/simonProduction.jpg)
+
+1. Within the project directory run `npm init -y`. This configures the directory to work with **node.js**.
+1. Modify or create `.gitignore` to ignore `node_modules`.
+1. Install the Express package by running `npm install express`. This will write the Express package dependency in the `package.json` file and install all the Express code to the `node_modules` directory.
+1. Create a file named `index.js` in the root of the project. This is the entry point that **node.js** will call when you run your web service.
+1. Add the basic Express JavaScript code needed to host the application static content and the desired endpoints.
+
+   ```js
+   const express = require('express');
+   const app = express();
+
+   // The service port. In production the frontend code is statically hosted by the service on the same port.
+   const port = process.argv.length > 2 ? process.argv[2] : 3000;
+
+   // JSON body parsing using built-in middleware
+   app.use(express.json());
+
+   // Serve up the frontend static content hosting
+   app.use(express.static('public'));
+
+   // Router for service endpoints
+   const apiRouter = express.Router();
+   app.use(`/api`, apiRouter);
+
+   // GetScores
+   apiRouter.get('/scores', (_req, res) => {
+     res.send(scores);
+   });
+
+   // SubmitScore
+   apiRouter.post('/score', (req, res) => {
+     scores = updateScores(req.body, scores);
+     res.send(scores);
+   });
+
+   // Return the application's default page if the path is unknown
+   app.use((_req, res) => {
+     res.sendFile('index.html', { root: 'public' });
+   });
+
+   app.listen(port, () => {
+     console.log(`Listening on port ${port}`);
+   });
+   ```
+
+1. Modify the Simon application code to make service endpoint requests to our newly created HTTP service code.
+
+   ```js
+   async function loadScores() {
+     const response = await fetch("/api/scores")
+     const scores = await response.json()
+
+     // Modify the DOM to display the scores
+   ```
+
+## Study this code
+
+Get familiar with what the example code teaches.
+
+- Clone the repository to your development environment.
+
+  ```sh
+  git clone https://github.com/webprogramming260/simon-service.git
+  ```
+
+- Review the code and get comfortable with everything it represents.
+- Debug the code in your browser by hosting it from a VS Code debug session. This [video on debugging a node.js based service](https://youtu.be/B0le_Z_2TQY) will step you through the process.
+
+  ⚠ You will no longer use the `live server` extension to launch your frontend code in the browser since your frontend code will now be served up by the Node.js server you created in `index.js`. Set breakpoints in your backend code inside of VS Code.
+
+- Use the browser's dev tools to set breakpoints in the frontend code and step through it each line.
+- Make modifications to the code as desired. Experiment and see what happens.
+
+## Deploy to production
+
+- Deploy to your production environment using a copy of the `deployService.sh` script found in the [example class application](https://github.com/webprogramming260/simon-service/blob/main/deployService.sh). Take some time to understand how it works.
+
+  ```sh
+  ./deployService.sh -k <yourpemkey> -h <yourdomain> -s simon
+  ```
+
+  For example,
+
+  ```sh
+  ./deployService.sh -k ~/keys/production.pem -h yourdomain.click -s simon
+  ```
+
+  ⚠ **NOTE** - The deployment script for this project is different from previous deployment scripts, since it needs to set up the Node.js service for your backend code, and copy your frontend code to the `public` directory. You also want to make sure that your Node.js HTTP service code for Simon is configured to listen on port 3000. When you deploy your Startup you want to make sure that code is configured to listen on port 4000.
+
+- Update your `startup` repository `notes.md` with what you learned.
+- Make sure your project is visible from your production environment (e.g. https://simon.yourdomain.click).
