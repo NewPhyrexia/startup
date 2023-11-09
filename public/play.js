@@ -1,3 +1,22 @@
+// Function to fetch and display a random emoji
+const emojiContainer = document.getElementById('lifetime-display');
+
+function displayRandomEmoji() {
+    fetch('https://emojihub.yurace.pro/api/random')
+        .then(response => response.json())
+        .then(data => {
+            const emojiHtmlCode = data.htmlCode[0];
+            emojiContainer.innerHTML = emojiHtmlCode;
+        })
+        .catch(error => {
+            console.error('Error fetching random emoji:', error);
+        });
+}
+
+// load a random emoji on page opening
+displayRandomEmoji();
+
+//variables
 let clickCount = 0;
 let timerRunning = false;
 let timerInterval;
@@ -101,3 +120,4 @@ customButton.addEventListener('click', () => {
         updateClickCount();
     }
 });
+
