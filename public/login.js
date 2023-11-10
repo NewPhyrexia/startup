@@ -14,4 +14,5 @@ function login() {
 
     localStorage.setItem('player', JSON.stringify(playerObject));
     // JSON.parse(localStorage.getItem('playerObject'));
+    
 }

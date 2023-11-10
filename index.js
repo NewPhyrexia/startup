@@ -10,22 +10,32 @@ app.use(express.json());
 // Serve up the frontend static content hosting
 app.use(express.static('public'));
 
-//ENDPOINT begin here
-
 // Router for service endpoints
 const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-// GetScores
-apiRouter.get('/scores', (_req, res) => {
-  res.send(scores);
-});
+//ENDPOINT begin here
 
-// SubmitScore
-apiRouter.post('/score', (req, res) => {
-  scores = updateScores(req.body, scores);
-  res.send(scores);
-});
+// check lifetime score
+apiRouter.get('/lifetimeHighScore', (_req, res) => {
+    let lifetimeHighScore = 0; // grab user's highscore from the database once implimented
+    console.log("in api router");
+    res.send({"highScore": lifetimeHighScore});
+  });
+  
+
+// // GetScores
+// apiRouter.get('/scores', (_req, res) => {
+//   res.send(scores);
+// });
+
+// // SubmitScore
+// apiRouter.post('/score', (req, res) => {
+//   scores = updateScores(req.body, scores);
+//   res.send(scores);
+// });
+
+//ENDPOINT end here
 
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {

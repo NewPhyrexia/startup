@@ -1,7 +1,22 @@
-// Function to fetch and display a random emoji
-const emojiContainer = document.getElementById('lifetime-display');
 
+// Gobal variables
+let clickCount = 0;
+let timerRunning = false;
+let timerInterval;
+let buttonClicked = false;
+let player = JSON.parse(localStorage.getItem('player'));
+
+
+// Check if "lifetimeHighScore" exists in local storage
+// const lifetimeHighScore = player.lifetimeHighScore;
+async function initHighScore() {
+    lifetimeHighScore = await getLifetimeHighScore();
+    console.log(lifetimeHighScore);
+}
+
+// Function to fetch and display a random emoji
 function displayRandomEmoji() {
+    const emojiContainer = document.getElementById('lifetime-display');
     fetch('https://emojihub.yurace.pro/api/random')
         .then(response => response.json())
         .then(data => {
@@ -13,29 +28,17 @@ function displayRandomEmoji() {
         });
 }
 
-// load a random emoji on page opening
-displayRandomEmoji();
-
-//variables
-let clickCount = 0;
-let timerRunning = false;
-let timerInterval;
-let buttonClicked = false;
-
-let player = JSON.parse(localStorage.getItem('player'));
-// Check if "lifetimeHighScore" exists in local storage
-const lifetimeHighScore = player.lifetimeHighScore;
-
-// Set the "highScore" variable based on the local storage value
-let highScore;
-if (lifetimeHighScore !== 0) {
-    highScore = lifetimeHighScore;
-} else {
-    highScore = 0;
+function setHighScore(lifetimeHighScore) {
+    // Set the "highScore" variable based on the local storage value
+    let highScore;
+    if (lifetimeHighScore !== 0) {
+        highScore = lifetimeHighScore;
+    } else {
+        highScore = 0;
+    }
+    const lifetimeHighScoreDisplay = document.getElementById('lifetime-highscore');
+        lifetimeHighScoreDisplay.textContent = highScore; 
 }
-const lifetimeHighScoreDisplay = document.getElementById('lifetime-highscore');
-    lifetimeHighScoreDisplay.textContent = highScore; 
-
 // Function to update the lifetime high score display
 function updateLifetimeHighScore() {
     const lifetimeHighScoreDisplay = document.getElementById('lifetime-highscore');
@@ -110,14 +113,40 @@ function updateClickCount() {
     }
 }
 
-// Add a click event listener to the button to start the timer
-const customButton = document.getElementById('custom-button');
-customButton.addEventListener('click', startTimer);
+function listeners() {
+    // Add a click event listener to the button to start the timer
+    const customButton = document.getElementById('custom-button');
+    customButton.addEventListener('click', startTimer);
 
-// Add a click event listener to the button to update the click count
-customButton.addEventListener('click', () => {
-    if (timerRunning && customButton.textContent === "Tap") {
-        updateClickCount();
-    }
-});
+    // Add a click event listener to the button to update the click count
+    customButton.addEventListener('click', () => {
+        if (timerRunning && customButton.textContent === "Tap") {
+            updateClickCount();
+        }
+    });
+}
 
+async function getLifetimeHighScore() {
+    // Get the user's lifetimeHighScore from the service
+    const response = await fetch('/api/lifetimeHighScore');
+    let lifetimeHighScore = await response.json();
+    console.log(lifetimeHighScore);
+    lifetimeHighScore = lifetimeHighScore.highScore;
+    console.log(lifetimeHighScore);
+    return lifetimeHighScore;
+}
+
+
+
+async function main() {
+
+    // variables
+    let lifetimeHighScore = 1;
+
+    //functions to use on boot up
+    initHighScore(); // check database for user's highscore
+    displayRandomEmoji(); // load a random emoji on page opening
+    listeners(); // click event listeners
+    setHighScore(lifetimeHighScore);
+}
+main();
