@@ -71,3 +71,13 @@ For this deliverable I implemented by JavaScript so that the application works f
 - **database** - Upon login a player object is created with a name and lifetimeHighScore. When the player beats their high score the lifetimeHighScore variable in the player object is updated.
 - **WebSocket** - I caused the other player's scores to populate after the timer ends. This will be replaced with WebSocket messages later.
 - **application logic** - A time begins when the tap button is pressed for the first time. As teh timer is running the score counter increases on every click. If the score beats the highscore the highscore will reflect the new highscore.
+
+## Service deliverable
+
+For this deliverable I added backend endpoints that receives votes and returns the voting totals.
+
+- **Node.js/Express HTTP service** - done
+- **Static middleware for frontend** - done
+- **Calls to third party endpoints** - Karma is shown with a random emoji that fetching from a github repo api.
+- **Backend service endpoints** - A highscore is stored in a DB placeholder that is checked upon page bootup. The same highscore is then updated by a Post if the highscore is beat.
+- **Frontend calls service endpoints** - The Highscore fetches from the temp database highscore on the back end.
