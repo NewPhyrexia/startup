@@ -18,8 +18,7 @@ app.use(`/api`, apiRouter);
 
 // check lifetime score
 apiRouter.get('/lifetimeHighScore', (_req, res) => {
-    let lifetimeHighScore = 0; // grab user's highscore from the database once implimented
-    console.log("in api router");
+    let lifetimeHighScore = 13; // grab user's highscore from the database once implimented
     res.send({"highScore": lifetimeHighScore});
   });
   

@@ -9,13 +9,6 @@ let highScore;
 let player = JSON.parse(localStorage.getItem('player'));
 
 
-// Check if "lifetimeHighScore" exists in local storage
-// const lifetimeHighScore = player.lifetimeHighScore;
-async function initHighScore() {
-    lifetimeHighScore = await getLifetimeHighScore();
-    console.log(lifetimeHighScore);
-}
-
 // Function to fetch and display a random emoji
 function displayRandomEmoji() {
     const emojiContainer = document.getElementById('lifetime-display');
@@ -127,27 +120,26 @@ function listeners() {
     });
 }
 
+// Check if "lifetimeHighScore" exists in local storage
+// const lifetimeHighScore = player.lifetimeHighScore;
+async function initHighScore() {
+    lifetimeHighScore = await getLifetimeHighScore();
+    setHighScore(lifetimeHighScore); // check database for user's highscore
+}
+
 async function getLifetimeHighScore() {
     // Get the user's lifetimeHighScore from the service
     const response = await fetch('/api/lifetimeHighScore');
     let lifetimeHighScore = await response.json();
-    console.log(lifetimeHighScore);
     lifetimeHighScore = lifetimeHighScore.highScore;
-    console.log(lifetimeHighScore);
     return lifetimeHighScore;
 }
 
 
-
-async function main() {
-
-    // variables
-    let lifetimeHighScore = 1;
-
+function main() {
     //functions to use on boot up
-    await initHighScore(); // check database for user's highscore
+    initHighScore();
     displayRandomEmoji(); // load a random emoji on page opening
     listeners(); // click event listeners
-    setHighScore(lifetimeHighScore);
 }
 main();
