@@ -15,24 +15,21 @@ const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 //ENDPOINT begin here
+let lifetimeHighScore = 13; // grab user's highscore from the database once implimented
+
 
 // check lifetime score
 apiRouter.get('/lifetimeHighScore', (_req, res) => {
-    let lifetimeHighScore = 13; // grab user's highscore from the database once implimented
+  console.log(lifetimeHighScore);
     res.send({"highScore": lifetimeHighScore});
   });
-  
 
-// // GetScores
-// apiRouter.get('/scores', (_req, res) => {
-//   res.send(scores);
-// });
-
-// // SubmitScore
-// apiRouter.post('/score', (req, res) => {
-//   scores = updateScores(req.body, scores);
-//   res.send(scores);
-// });
+// update lifetime score
+apiRouter.post('/updateHighScore', (req, res) => {
+  lifetimeHighScore = req.body.highScore;
+  console.log(lifetimeHighScore);
+  res.send({message: "High score recieved"});
+});
 
 //ENDPOINT end here
 

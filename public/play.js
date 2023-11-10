@@ -92,6 +92,7 @@ function startTimer() {
                 if (clickCount > highScore) {
                     highScore = clickCount;
                     updateLifetimeHighScore();
+                    updateUserLifetimeHighScore(highScore);
                 }
             }
         }, 1000);
@@ -130,11 +131,27 @@ async function initHighScore() {
 async function getLifetimeHighScore() {
     // Get the user's lifetimeHighScore from the service
     const response = await fetch('/api/lifetimeHighScore');
-    let lifetimeHighScore = await response.json();
-    lifetimeHighScore = lifetimeHighScore.highScore;
+    let userObj = await response.json();
+    lifetimeHighScore = userObj.highScore;
     return lifetimeHighScore;
 }
 
+async function updateUserLifetimeHighScore(score) {
+    const response = await fetch('/api/updateHighScore', {
+        method: 'POST',
+        body: JSON.stringify({
+          user: 'temp name',
+          highScore: score,
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+      })
+        .then((response) => response.json())
+        .then((jsonResponse) => {
+          console.log(jsonResponse);
+        });
+}
 
 function main() {
     //functions to use on boot up
