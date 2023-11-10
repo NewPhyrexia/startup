@@ -78,6 +78,6 @@ For this deliverable I added backend endpoints that receives votes and returns t
 
 - **Node.js/Express HTTP service** - done
 - **Static middleware for frontend** - done
-- **Calls to third party endpoints** - Karma is shown with a random emoji that fetching from a github repo api.
-- **Backend service endpoints** - A highscore is stored in a DB placeholder that is checked upon page bootup. The same highscore is then updated by a Post if the highscore is beat.
+- **Calls to third party endpoints** - Karma is shown with a random emoji that fetches from a github repo api.
+- **Backend service endpoints** - A highscore is stored in a DB placeholder that is checked by a GET upon page bootup. The same highscore is then updated by a Post if the highscore is beat during the game.
 - **Frontend calls service endpoints** - The Highscore fetches from the temp database highscore on the back end.
