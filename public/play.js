@@ -4,6 +4,8 @@ let clickCount = 0;
 let timerRunning = false;
 let timerInterval;
 let buttonClicked = false;
+let highScore;
+
 let player = JSON.parse(localStorage.getItem('player'));
 
 
@@ -30,7 +32,6 @@ function displayRandomEmoji() {
 
 function setHighScore(lifetimeHighScore) {
     // Set the "highScore" variable based on the local storage value
-    let highScore;
     if (lifetimeHighScore !== 0) {
         highScore = lifetimeHighScore;
     } else {
@@ -144,7 +145,7 @@ async function main() {
     let lifetimeHighScore = 1;
 
     //functions to use on boot up
-    initHighScore(); // check database for user's highscore
+    await initHighScore(); // check database for user's highscore
     displayRandomEmoji(); // load a random emoji on page opening
     listeners(); // click event listeners
     setHighScore(lifetimeHighScore);
