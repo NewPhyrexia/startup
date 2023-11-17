@@ -16,12 +16,10 @@ app.use(express.static('public'));
 const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-
 //ENDPOINTS begin here
 
-app.use(express.json());
 
-app.get('/player/:username', async (req, res) => {
+apiRouter.get('/player/:username', async (req, res) => {
   const { username } = req.params;
 
   try {
@@ -38,7 +36,7 @@ app.get('/player/:username', async (req, res) => {
   }
 });
 
-app.post('/createPlayer', async (req, res) => {
+apiRouter.post('/createPlayer', async (req, res) => {
   try {
     const playerObject = req.body;
 

@@ -27,10 +27,10 @@ async function getPlayerInfo(username) {
     } finally {
       await client.close();
     }
-  }
+}
   
-  // Function to add a player to the database if not found
-  async function addPlayer(playerObject) {
+// Function to add a player to the database if not found
+async function addPlayer(playerObject) {
     try {
       await client.connect();
       
@@ -45,7 +45,7 @@ async function getPlayerInfo(username) {
     } finally {
       await client.close();
     }
-  }
+}
   
   module.exports = {
     getPlayerInfo,

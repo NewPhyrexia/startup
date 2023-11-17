@@ -1,11 +1,10 @@
-
+console.log("top of play.js");
 // Gobal variables
 let clickCount = 0;
 let timerRunning = false;
 let timerInterval;
 let buttonClicked = false;
 let highScore;
-
 let player = JSON.parse(localStorage.getItem('player'));
 
 function getPlayerName() {
@@ -156,47 +155,47 @@ async function updateUserLifetimeHighScore(score) {
         });
 }
 
-function fetchplayer() {
-   
-    fetch('/api/createPlayer', {
+async function fetchPlayerAndUpdate() {
+    console.log("I am in the fetchplayerandupdate function");
+    try {
+      const createResponse = await fetch('/api/createPlayer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(player),
-      })
-        .then(response => {
-          if (response.ok) {
-            console.log('Player object sent successfully');
-      
-            fetch(`/api/player/${player.userName}`)
-              .then(response => response.json())
-              .then(data => {
-                console.log('Player retrieved:', data);
-                // Update the player object with the received data
-                player = data; // Assuming the data received contains the updated player information
-                console.log('Updated Player:', player);
-                // Now player object in play.js is updated with the received data
-              })
-              .catch(error => {
-                console.error('Error fetching player:', error);
-                // Handle errors in fetching player information
-              });
-          } else {
-            throw new Error('Failed to send player object');
-          }
-        })
-        .catch(error => {
-          console.error('Error sending player object:', error);
-          // Handle errors in sending player object
-        });
-}
+      });
+  
+      if (!createResponse.ok) {
+        throw new Error('Failed to send player object');
+      }
+  
+      console.log('Player object sent successfully');
+  
+      const playerResponse = await fetch(`/api/player/${player.userName}`);
+  
+      if (playerResponse.ok) {
+        const data = await playerResponse.json();
+        console.log('Player retrieved:', data);
+        player = data; // Update the player object with the received data
+        console.log('Updated Player:', player);
+        // Now the player object in play.js is updated with the received data
+      } else {
+        throw new Error('Failed to fetch player object');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle errors
+    }
+  }
 
 function main() {
     //functions to use on boot up
-    fetchplayer();
+    console.log("in main function");
+    fetchPlayerAndUpdate();
     initHighScore();
     displayRandomEmoji(); // load a random emoji on page opening
     listeners(); // click event listeners
 }
+console.log("does this print before the listener's log?");
 main();
