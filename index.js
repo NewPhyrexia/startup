@@ -21,6 +21,7 @@ app.use(`/api`, apiRouter);
 
 
 //ENDPOINT begin here
+
 let lifetimeHighScore = 13; // grab user's highscore from the database once implimented
 let canReset = true;
 
@@ -50,6 +51,9 @@ apiRouter.post('/updateHighScore', (req, res) => {
 });
 
 //ENDPOINT end here
+
+
+
 
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {
