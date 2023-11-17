@@ -17,10 +17,45 @@ const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 
+//ENDPOINTS begin here
 
+app.use(express.json());
 
+app.get('/player/:username', async (req, res) => {
+  const { username } = req.params;
 
-//ENDPOINT begin here
+  try {
+    const player = await DB.getPlayerInfo(username);
+
+    if (player) {
+      res.json(player);
+    } else {
+      res.status(404).json({ message: 'Player not found' });
+    }
+  } catch (error) {
+    console.error('Error in handling request:', error);
+    res.status(500).send('Server Error');
+  }
+});
+
+app.post('/createPlayer', async (req, res) => {
+  try {
+    const playerObject = req.body;
+
+    await DB.addPlayer(playerObject);
+
+    const retrievedPlayer = await DB.getPlayerInfo(playerObject.userName);
+
+    if (retrievedPlayer) {
+      res.status(200).json(retrievedPlayer);
+    } else {
+      res.status(404).json({ message: 'Player not found' });
+    }
+  } catch (error) {
+    console.error('Error creating player:', error);
+    res.status(500).send('Server Error');
+  }
+});
 
 let lifetimeHighScore = 13; // grab user's highscore from the database once implimented
 let canReset = true;
@@ -50,9 +85,7 @@ apiRouter.post('/updateHighScore', (req, res) => {
   res.send({message: "High score recieved"});
 });
 
-//ENDPOINT end here
-
-
+//ENDPOINTS end here
 
 
 // Return the application's default page if the path is unknown

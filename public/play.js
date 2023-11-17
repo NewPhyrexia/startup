@@ -156,8 +156,45 @@ async function updateUserLifetimeHighScore(score) {
         });
 }
 
+function fetchplayer() {
+   
+    fetch('/api/createPlayer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(player),
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Player object sent successfully');
+      
+            fetch(`/api/player/${player.userName}`)
+              .then(response => response.json())
+              .then(data => {
+                console.log('Player retrieved:', data);
+                // Update the player object with the received data
+                player = data; // Assuming the data received contains the updated player information
+                console.log('Updated Player:', player);
+                // Now player object in play.js is updated with the received data
+              })
+              .catch(error => {
+                console.error('Error fetching player:', error);
+                // Handle errors in fetching player information
+              });
+          } else {
+            throw new Error('Failed to send player object');
+          }
+        })
+        .catch(error => {
+          console.error('Error sending player object:', error);
+          // Handle errors in sending player object
+        });
+}
+
 function main() {
     //functions to use on boot up
+    fetchplayer();
     initHighScore();
     displayRandomEmoji(); // load a random emoji on page opening
     listeners(); // click event listeners
