@@ -1,13 +1,14 @@
 title Tapbattle
 
-front-->back:GET user
+fPlay-->back:GET user
 back-->db:GET user from list
+back<--db: send user info
 
 back--> db: (if null recieved) POST new user
 
 back<--db: send user info
 
-front<--back: set user highscore
+fPlay<--back: set user highscore
 
-front-->back:POST user new highscore
+fPlay-->back:POST user new highscore
 back-->db:POST user new highscore

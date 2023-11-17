@@ -8,8 +8,8 @@ function login() {
   const nameEl = document.querySelector("#name");
 
   let playerObject = {
-      name: nameEl.value,
-      lifetimeHighScore: 0
+      userName: nameEl.value,
+      HighScore: 0
       };
 
     localStorage.setItem('player', JSON.stringify(playerObject));

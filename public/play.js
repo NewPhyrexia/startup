@@ -8,6 +8,9 @@ let highScore;
 
 let player = JSON.parse(localStorage.getItem('player'));
 
+function getPlayerName() {
+    return localStorage.getItem(player.userName) ?? 'Mystery player';
+  }
 
 // Function to fetch and display a random emoji
 function displayRandomEmoji() {
@@ -37,8 +40,8 @@ function setHighScore(lifetimeHighScore) {
 function updateLifetimeHighScore() {
     const lifetimeHighScoreDisplay = document.getElementById('lifetime-highscore');
     lifetimeHighScoreDisplay.textContent = highScore; // Display highScore
-    player.lifetimeHighScore = highScore;
-    localStorage.setItem('player', JSON.stringify(player));
+    player.HighScore = highScore;
+    localStorage.setItem('player', JSON.stringify(player)); //update local storage player info
 }
 
 function updatePlayersScores() {
@@ -122,7 +125,7 @@ function listeners() {
 }
 
 // Check if "lifetimeHighScore" exists in local storage
-// const lifetimeHighScore = player.lifetimeHighScore;
+// const lifetimeHighScore = player.HighScore;
 async function initHighScore() {
     lifetimeHighScore = await getLifetimeHighScore();
     setHighScore(lifetimeHighScore); // check database for user's highscore
@@ -140,7 +143,7 @@ async function updateUserLifetimeHighScore(score) {
     const response = await fetch('/api/updateHighScore', {
         method: 'POST',
         body: JSON.stringify({
-          user: 'temp name',
+          user: player.userName,
           highScore: score,
         }),
         headers: {
