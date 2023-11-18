@@ -195,9 +195,9 @@ async function fetchPlayerAndUpdate() {
 async function main() {
     //functions to use on boot up
     displayRandomEmoji(); // load a random emoji on page opening
-    listeners(); // click event listeners
     await fetchPlayerAndUpdate();
     initHighScore();
+    listeners(); // click event listeners
     
 }
 main();
