@@ -46,6 +46,24 @@ async function addPlayer(playerObject) {
       await client.close();
     }
 }
+
+// Function to add a player to the database if not found
+async function updatePlayer(playerObject) {
+    try {
+      await client.connect();
+      
+      // Insert the player if not found
+      await playerCollection.updateOne(
+        { userName: playerObject.userName },
+        { $setOnInsert: playerObject },
+        { upsert: true }
+      );
+    } catch (error) {
+      console.error('Error in adding player:', error);
+    } finally {
+      await client.close();
+    }
+}
   
   module.exports = {
     getPlayerInfo,

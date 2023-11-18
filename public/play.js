@@ -40,7 +40,7 @@ function updateLifetimeHighScore(score) {
     lifetimeHighScoreDisplay.textContent = score; // Display highScore
     player.HighScore = score;
     localStorage.setItem('player', JSON.stringify(player)); //update local storage player info
-    updateUserLifetimeHighScore(score); // update the user's player obj in db
+    updateUserLifetimeHighScore(); // update the user's player obj in db
 }
 
 function updatePlayersScores() {
@@ -136,21 +136,25 @@ async function initHighScore() {
 //     return lifetimeHighScore;
 // }
 
-async function updateUserLifetimeHighScore(score) {
-    const response = await fetch('/api/updateHighScore', {
+async function updateUserLifetimeHighScore() {
+    try {
+      const createResponse = await fetch('/api/updateHighScore', {
         method: 'POST',
-        body: JSON.stringify({
-          user: player.userName,
-          highScore: score,
-        }),
         headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
-      })
-        .then((response) => response.json())
-        .then((jsonResponse) => {
-          console.log(jsonResponse);
-        });
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(player),
+      });
+
+      if (!createResponse.ok) {
+        throw new Error('Failed to send player object');
+      }
+  
+      console.log('Player object sent successfully');
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle errors
+      }
 }
 
 async function fetchPlayerAndUpdate() {
@@ -163,7 +167,7 @@ async function fetchPlayerAndUpdate() {
         },
         body: JSON.stringify(player),
       });
-  
+      
       if (!createResponse.ok) {
         throw new Error('Failed to send player object');
       }

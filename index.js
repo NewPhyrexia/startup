@@ -75,14 +75,23 @@ apiRouter.post('/createPlayer', async (req, res) => {
 
 // update lifetime score
 apiRouter.post('/updateHighScore', (req, res) => {
-  lifetimeHighScore = req.body.highScore;
-  console.log(lifetimeHighScore);
-  // if (canReset) {
-  //   pauseCode(1); // reset highscore on the server while DB is not implimented
-  // }
-  res.send({message: "High score recieved"});
-});
+  try {
+    const playerObject = req.body;
 
+    await DB.updatePlayer(playerObject);
+
+    const retrievedPlayer = await DB.getPlayerInfo(playerObject.userName);
+
+    if (retrievedPlayer) {
+      res.status(200).json(retrievedPlayer);
+    } else {
+      res.status(404).json({ message: 'Player not found' });
+    }
+  } catch (error) {
+    console.error('Error updating player:', error);
+    res.status(500).send('Server Error');
+  }
+}
 //ENDPOINTS end here
 
 
