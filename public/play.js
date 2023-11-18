@@ -1,4 +1,3 @@
-console.log("top of play.js");
 // Gobal variables
 let clickCount = 0;
 let timerRunning = false;
@@ -123,8 +122,6 @@ function listeners() {
     });
 }
 
-// Check if "lifetimeHighScore" exists in local storage
-// const lifetimeHighScore = player.HighScore;
 async function initHighScore() {
     lifetimeHighScore = await getLifetimeHighScore();
     setHighScore(lifetimeHighScore); // check database for user's highscore
@@ -189,13 +186,12 @@ async function fetchPlayerAndUpdate() {
     }
   }
 
-function main() {
+async function main() {
     //functions to use on boot up
     console.log("in main function");
-    fetchPlayerAndUpdate();
-    initHighScore();
-    displayRandomEmoji(); // load a random emoji on page opening
-    listeners(); // click event listeners
+    await fetchPlayerAndUpdate();
+    await initHighScore();
+    await displayRandomEmoji(); // load a random emoji on page opening
+    await listeners(); // click event listeners
 }
-console.log("does this print before the listener's log?");
 main();

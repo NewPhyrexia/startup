@@ -1,6 +1,6 @@
 title Tapbattle
 
-fPlay-->back:GET user
+fPlay-->back:Post user
 back-->db:GET user from list
 back<--db: send user info
 
