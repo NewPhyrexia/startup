@@ -74,10 +74,18 @@ For this deliverable I implemented by JavaScript so that the application works f
 
 ## Service deliverable
 
-For this deliverable I added backend endpoints that receives votes and returns the voting totals.
+For this deliverable I added endpoints that allowed the user's score to update and be stored in the backend.
 
 - **Node.js/Express HTTP service** - done
 - **Static middleware for frontend** - done
 - **Calls to third party endpoints** - Karma is shown with a random emoji that fetches from a github repo api.
 - **Backend service endpoints** - A highscore is stored in a DB placeholder that is checked by a GET upon page bootup. The same highscore is then updated by a Post if the highscore is beat during the game.
 - **Frontend calls service endpoints** - The Highscore fetches from the temp database highscore on the back end.
+
+## DB deliverable
+
+For this deliverable I stored the user's plaer info in the database.
+
+- **MongoDB Atlas database created** - done
+- **Endpoints for data** - My stubbed out endpoints now process the data and send it to Mongo.
+- **Stores data in MongoDB** - store the player objects that are created at login.

@@ -128,14 +128,6 @@ async function initHighScore() {
     setHighScore(player.HighScore);
 }
 
-// async function getLifetimeHighScore() {
-//     // Get the user's lifetimeHighScore from the service
-//     const response = await fetch('/api/lifetimeHighScore');
-//     let userObj = await response.json();
-//     lifetimeHighScore = userObj.highScore;
-//     return lifetimeHighScore;
-// }
-
 async function updateUserLifetimeHighScore() {
 
     console.log('Sending player: ', player);
@@ -164,7 +156,6 @@ async function updateUserLifetimeHighScore() {
       }  
     } catch (error) {
         console.error('Error:', error);
-        // Handle errors
       }
 }
 
@@ -200,10 +191,6 @@ async function fetchPlayerAndUpdate() {
       // Handle errors
     }
   }
-
-async function postUpdatePlayer() {
-
-} 
 
 async function main() {
     //functions to use on boot up

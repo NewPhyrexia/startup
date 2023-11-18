@@ -55,24 +55,6 @@ apiRouter.post('/createPlayer', async (req, res) => {
   }
 });
 
-// let lifetimeHighScore = 13; // grab user's highscore from the database once implimented
-// let canReset = true;
-
-// function pauseCode(minutes) {
-//   canReset = false;
-//   const milliseconds = minutes * 60 * 1000; // Convert minutes to milliseconds
-//   setTimeout(function() {
-//     lifetimeHighScore = 13;
-//     canReset = true;
-//   }, milliseconds);
-// }
-
-// // check lifetime score
-// apiRouter.get('/lifetimeHighScore', (_req, res) => {
-//   console.log(lifetimeHighScore);
-//     res.send({"highScore": lifetimeHighScore});
-//   });
-
 // update lifetime score
 apiRouter.post('/updateHighScore', async (req, res) => {
   try {
