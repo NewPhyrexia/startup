@@ -137,6 +137,8 @@ async function initHighScore() {
 // }
 
 async function updateUserLifetimeHighScore() {
+
+    console.log('Sending player: ', player);
     try {
       const createResponse = await fetch('/api/updateHighScore', {
         method: 'POST',
@@ -151,6 +153,15 @@ async function updateUserLifetimeHighScore() {
       }
   
       console.log('Player object sent successfully');
+
+      if (createResponse.ok) {
+        const data = await createResponse.json();
+        console.log('Player retrieved:', data);
+        player = data; // Update the player object with the received data
+        // Now the player object in play.js is updated with the received data
+      } else {
+        throw new Error('Failed to fetch player object');
+      }  
     } catch (error) {
         console.error('Error:', error);
         // Handle errors
@@ -180,7 +191,6 @@ async function fetchPlayerAndUpdate() {
         const data = await playerResponse.json();
         console.log('Player retrieved:', data);
         player = data; // Update the player object with the received data
-        console.log('Updated Player:', player);
         // Now the player object in play.js is updated with the received data
       } else {
         throw new Error('Failed to fetch player object');
