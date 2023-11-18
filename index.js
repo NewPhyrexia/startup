@@ -74,7 +74,7 @@ apiRouter.post('/createPlayer', async (req, res) => {
 //   });
 
 // update lifetime score
-apiRouter.post('/updateHighScore', (req, res) => {
+apiRouter.post('/updateHighScore', async (req, res) => {
   try {
     const playerObject = req.body;
 
@@ -91,7 +91,8 @@ apiRouter.post('/updateHighScore', (req, res) => {
     console.error('Error updating player:', error);
     res.status(500).send('Server Error');
   }
-}
+});
+
 //ENDPOINTS end here
 
 
