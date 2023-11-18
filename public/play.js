@@ -40,7 +40,7 @@ function updateLifetimeHighScore(score) {
     lifetimeHighScoreDisplay.textContent = score; // Display highScore
     player.HighScore = score;
     localStorage.setItem('player', JSON.stringify(player)); //update local storage player info
-    // need to add post api to get db updated.
+    updateUserLifetimeHighScore(score); // update the user's player obj in db
 }
 
 function updatePlayersScores() {
@@ -94,7 +94,6 @@ function startTimer() {
                 if (clickCount > highScore) {
                     highScore = clickCount;
                     updateLifetimeHighScore(highScore);
-                    updateUserLifetimeHighScore(highScore); // this will be moved to updateLifetimeHighScore
                 }
             }
         }, 1000);
@@ -129,13 +128,13 @@ async function initHighScore() {
     setHighScore(player.HighScore);
 }
 
-async function getLifetimeHighScore() {
-    // Get the user's lifetimeHighScore from the service
-    const response = await fetch('/api/lifetimeHighScore');
-    let userObj = await response.json();
-    lifetimeHighScore = userObj.highScore;
-    return lifetimeHighScore;
-}
+// async function getLifetimeHighScore() {
+//     // Get the user's lifetimeHighScore from the service
+//     const response = await fetch('/api/lifetimeHighScore');
+//     let userObj = await response.json();
+//     lifetimeHighScore = userObj.highScore;
+//     return lifetimeHighScore;
+// }
 
 async function updateUserLifetimeHighScore(score) {
     const response = await fetch('/api/updateHighScore', {
@@ -187,6 +186,10 @@ async function fetchPlayerAndUpdate() {
       // Handle errors
     }
   }
+
+async function postUpdatePlayer() {
+
+} 
 
 async function main() {
     //functions to use on boot up
