@@ -24,10 +24,10 @@ function displayRandomEmoji() {
         });
 }
 
-function setHighScore(lifetimeHighScore) {
+function setHighScore(score) {
     // Set the "highScore" variable based on the local storage value
-    if (lifetimeHighScore !== 0) {
-        highScore = lifetimeHighScore;
+    if (score !== 0) {
+        highScore = score;
     } else {
         highScore = 0;
     }
@@ -35,11 +35,12 @@ function setHighScore(lifetimeHighScore) {
         lifetimeHighScoreDisplay.textContent = highScore; 
 }
 // Function to update the lifetime high score display
-function updateLifetimeHighScore() {
+function updateLifetimeHighScore(score) {
     const lifetimeHighScoreDisplay = document.getElementById('lifetime-highscore');
-    lifetimeHighScoreDisplay.textContent = highScore; // Display highScore
-    player.HighScore = highScore;
+    lifetimeHighScoreDisplay.textContent = score; // Display highScore
+    player.HighScore = score;
     localStorage.setItem('player', JSON.stringify(player)); //update local storage player info
+    // need to add post api to get db updated.
 }
 
 function updatePlayersScores() {
@@ -63,7 +64,7 @@ function updateTimerDisplay(seconds) {
         timerDisplay.textContent = "Time!";
         if (clickCount > highScore) {
             highScore = clickCount; // Update highScore
-            updateLifetimeHighScore(); // Update lifetime high score display
+            updateLifetimeHighScore(highScore); // Update lifetime high score display
         }
     } else {
         timerDisplay.textContent = seconds;
@@ -92,8 +93,8 @@ function startTimer() {
                 updatePlayersScores();//web socket placeholder for other player's score update.
                 if (clickCount > highScore) {
                     highScore = clickCount;
-                    updateLifetimeHighScore();
-                    updateUserLifetimeHighScore(highScore);
+                    updateLifetimeHighScore(highScore);
+                    updateUserLifetimeHighScore(highScore); // this will be moved to updateLifetimeHighScore
                 }
             }
         }, 1000);
@@ -123,8 +124,9 @@ function listeners() {
 }
 
 async function initHighScore() {
-    lifetimeHighScore = await getLifetimeHighScore();
-    setHighScore(lifetimeHighScore); // check database for user's highscore
+    // score = await getLifetimeHighScore();
+    // setHighScore(score); // check database for user's highscore
+    setHighScore(player.HighScore);
 }
 
 async function getLifetimeHighScore() {
@@ -188,10 +190,9 @@ async function fetchPlayerAndUpdate() {
 
 async function main() {
     //functions to use on boot up
-    console.log("in main function");
     await fetchPlayerAndUpdate();
-    await initHighScore();
-    await displayRandomEmoji(); // load a random emoji on page opening
-    await listeners(); // click event listeners
+    initHighScore();
+    displayRandomEmoji(); // load a random emoji on page opening
+    listeners(); // click event listeners
 }
 main();
