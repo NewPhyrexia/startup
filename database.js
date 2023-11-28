@@ -58,20 +58,20 @@ async function updatePlayer(playerObject) {
     }
   }
 
-  function getUser(email) {
-    return userCollection.findOne({ email: email });
+  function getUser(name) {
+    return userCollection.findOne({ name: name });
   }
   
   function getUserByToken(token) {
     return userCollection.findOne({ token: token });
   }
   
-  async function createUser(email, password) {
+  async function createUser(name, password) {
     // Hash the password before we insert it into the database
     const passwordHash = await bcrypt.hash(password, 10);
   
     const user = {
-      email: email,
+      name: name,
       password: passwordHash,
       token: uuid.v4(),
     };

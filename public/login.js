@@ -39,7 +39,7 @@ async function loginOrCreate(endpoint) {
   const password = document.querySelector('#userPassword')?.value;
   const response = await fetch(endpoint, {
     method: 'post',
-    body: JSON.stringify({ email: userName, password: password }),
+    body: JSON.stringify({ name: userName, password: password }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
@@ -68,10 +68,10 @@ function logout() {
   }).then(() => (window.location.href = '/'));
 }
 
-async function getUser(email) {
+async function getUser(name) {
   let scores = [];
-  // See if we have a user with the given email.
-  const response = await fetch(`/api/user/${email}`);
+  // See if we have a user with the given name.
+  const response = await fetch(`/api/user/${name}`);
   if (response.status === 200) {
     return response.json();
   }

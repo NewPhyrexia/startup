@@ -8,10 +8,10 @@ let highScore;
 let player;
 
 function getPlayer() {
-  const nameEl = document.querySelector("#userName");
+  const nameEl = localStorage.getItem('userName');
 
   let playerObject = {
-          userName: nameEl.value,
+          userName: nameEl,
           HighScore: 0
           };
     
