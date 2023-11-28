@@ -4,10 +4,18 @@ let timerRunning = false;
 let timerInterval;
 let buttonClicked = false;
 let highScore;
-let player = JSON.parse(localStorage.getItem('player'));
+// let player = JSON.parse(localStorage.getItem('player'));
+let player;
 
-function getPlayerName() {
-    return localStorage.getItem(player.userName) ?? 'Mystery player';
+function getPlayer() {
+  const nameEl = document.querySelector("#userName");
+
+  let playerObject = {
+          userName: nameEl.value,
+          HighScore: 0
+          };
+    
+        localStorage.setItem('player', JSON.stringify(playerObject));
   }
 
 // Function to fetch and display a random emoji
@@ -194,6 +202,8 @@ async function fetchPlayerAndUpdate() {
 
 async function main() {
     //functions to use on boot up
+    getPlayer();
+    player = JSON.parse(localStorage.getItem('player'));
     displayRandomEmoji(); // load a random emoji on page opening
     listeners(); // click event listeners
     await fetchPlayerAndUpdate();

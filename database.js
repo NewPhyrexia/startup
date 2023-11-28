@@ -20,22 +20,18 @@ const playerCollection = db.collection('players');
 // Function to get player information by username from the database
 async function getPlayerInfo(username) {
     try {
-      await client.connect();
       
       // Find the player by username
       const player = await playerCollection.findOne({ userName: username });
       return player;
     } catch (error) {
       console.error('Error in getting player info:', error);
-    } finally {
-      await client.close();
-    }
+    } 
 }
   
 // Function to add a player to the database if not found
 async function addPlayer(playerObject) {
     try {
-      await client.connect();
       
       // Insert the player if not found
       await playerCollection.updateOne(
@@ -45,14 +41,11 @@ async function addPlayer(playerObject) {
       );
     } catch (error) {
       console.error('Error in adding player:', error);
-    } finally {
-      await client.close();
     }
 }
 
 async function updatePlayer(playerObject) {
     try {
-      await client.connect();
   
       delete playerObject._id; // Exclude _id from update data if present
   
@@ -62,8 +55,6 @@ async function updatePlayer(playerObject) {
       );
     } catch (error) {
       console.error('Error in updating player:', error);
-    } finally {
-      await client.close();
     }
   }
 
