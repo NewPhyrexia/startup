@@ -34,12 +34,26 @@
 
     <main class="container-fluid bg-secondary text-center">
       <div>
-        <h1 style="color: #555;">Welcome</h1>
-        <p style="color: #555;">Login to play</p>
-        <form method="get" action="play.html">
-          <input type="text" id="name" placeholder="Username here" />
-          <button type="submit" class="btn btn-teal" onclick="login()">Login</button>
-        </form>
+        <h1 style="color: #555; ">Welcome to Tapbattle</h1>
+        <!-- Displayed when needing authentication -->
+        <div id="loginControls" style="display: none">
+          <div class="input-group mb-3">
+            <!-- <span class="input-group-text">@</span> -->
+            <input class="form-control" type="text" id="userName" placeholder="your@email.com" />
+          </div>
+          <div class="input-group mb-3">
+            <!-- <span class="input-group-text">🔒</span> -->
+            <input class="form-control" type="password" id="userPassword" placeholder="password" />
+          </div>
+          <button type="button" class="btn btn-teal" onclick="loginUser()">Login</button>
+          <button type="button" class="btn btn-teal" onclick="createUser()">Create</button>
+        </div>
+        <!-- Displayed when ready to play -->
+        <div id="playControls" style="display: none">
+          <div id="playerName"></div>
+          <button type="button" class="btn btn-teal" onclick="play()">Play</button>
+          <button type="button" class="btn btn-teal" onclick="logout()">Logout</button>
+        </div>
       </div>
 
         <!-- Error dialog -->
