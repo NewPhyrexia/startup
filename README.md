@@ -89,3 +89,12 @@ For this deliverable I stored the user's plaer info in the database.
 - **MongoDB Atlas database created** - done
 - **Endpoints for data** - My stubbed out endpoints now process the data and send it to Mongo.
 - **Stores data in MongoDB** - store the player objects that are created at login.
+
+## Login deliverable
+
+For this deliverable I associate the highscore with the logged in user.
+
+- **User registration** - Creates a new account in the database.
+- **existing user** - Stores the highscore under the same user if the user already exists.
+- **Use MongoDB to store credentials** - Stores both user and their highscore.
+- **Restricts functionality** - You cannot play until you have logged in. This is restricted on the frontend.
