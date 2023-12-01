@@ -53,20 +53,6 @@ function updateLifetimeHighScore(score) {
     updateUserLifetimeHighScore(); // update the user's player obj in db
 }
 
-function updatePlayersScores() {
-    //Player 1
-    const tempScore1 = document.getElementById('player-1');
-    tempScore1.textContent = "53";
-
-    //Player 2
-    const tempScore2 = document.getElementById('player-2');
-    tempScore2.textContent = "67";
-
-    //Player 3
-    const tempScore3 = document.getElementById('player-3');
-    tempScore3.textContent = "42";
-}
-
 // Function to update the timer display
 function updateTimerDisplay(seconds) {
     const timerDisplay = document.getElementById('player-timer');
@@ -100,7 +86,7 @@ function startTimer() {
             } else if (seconds === 0) {
                 updateTimerDisplay("T_T");
                 customButton.disabled = true;
-                updatePlayersScores();//web socket placeholder for other player's score update.
+                updatePlayersScores(player);//web socket placeholder for other player's score update.
                 if (clickCount > highScore) {
                     highScore = clickCount;
                     updateLifetimeHighScore(highScore);
@@ -202,10 +188,51 @@ async function fetchPlayerAndUpdate() {
     }
   }
 
+// Functionality for peer communication using WebSocket
+
+function configureWebSocket() {
+  const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+  socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+  socket.onmessage = async (event) => {
+    const msg = JSON.parse(await event.data.text());
+    if (msg.type === GameEndEvent) {
+      this.displayMsg('player', msg.from, `scored ${msg.value.score}`);
+    } else if (msg.type === GameStartEvent) {
+      this.displayMsg('player', msg.from, `started a new game`);
+    }
+  };
+}
+
+function displayMsg(cls, from, msg) {
+  const chatText = document.querySelector('#player-messages');
+  chatText.innerHTML = `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
+}
+
+function updatePlayersScores(latestPlayer) {
+  //Player 1
+  const tempScore1 = document.getElementById('player-1-score');
+  tempScore1.textContent = "53";
+  const tempName1 = document.getElementById('player-1-name');
+  tempName1.textContent = "Bill";
+
+  //Player 2
+  const tempScore2 = document.getElementById('player-2-score');
+  tempScore2.textContent = "67";
+  const tempName2 = document.getElementById('player-2-name');
+  tempName2.textContent = "Ted";
+
+  //Player 3
+  const tempScore3 = document.getElementById('player-3-score');
+  tempScore3.textContent = "42";
+  const tempName3 = document.getElementById('player-3-name');
+  tempName3.textContent = "Excellent";
+}
+
 async function main() {
     //functions to use on boot up
     getPlayer();
     player = JSON.parse(localStorage.getItem('player'));
+    configureWebSocket();
     displayRandomEmoji(); // load a random emoji on page opening
     listeners(); // click event listeners
     await fetchPlayerAndUpdate();
