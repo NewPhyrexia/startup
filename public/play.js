@@ -1,5 +1,6 @@
 // Gobal variables
 const GameEndEvent = 'gameEnd';
+
 let clickCount = 0;
 let timerRunning = false;
 let timerInterval;
