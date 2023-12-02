@@ -229,9 +229,9 @@ function updatePlayersScores(latestPlayer) {
 
   //Player 1
   const tempScore1 = document.getElementById('player-1-score');
-  tempScore1.textContent = latestPlayer.userName; //use player score
+  tempScore1.textContent = latestPlayer.HighScore; //use player score
   const tempName1 = document.getElementById('player-1-name');
-  tempName1.textContent = latestPlayer.HighScore; // use player name
+  tempName1.textContent = latestPlayer.userName; // use player name
 }
 
 async function main() {
