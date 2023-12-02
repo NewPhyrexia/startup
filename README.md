@@ -98,3 +98,12 @@ For this deliverable I associate the highscore with the logged in user.
 - **existing user** - Stores the highscore under the same user if the user already exists.
 - **Use MongoDB to store credentials** - Stores both user and their highscore.
 - **Restricts functionality** - You cannot play until you have logged in. This is restricted on the frontend.
+
+## WebSocket deliverable
+
+For this deliverable I used webSocket to update the player scores in the middle of the app on the frontend in realtime.
+
+- **Backend listens for WebSocket connection** - done
+- **Frontend makes WebSocket connection** - done
+- **Data sent over WebSocket connection** - done
+- **WebSocket data displayed** - All user's latest scror display in realtime to other users.
