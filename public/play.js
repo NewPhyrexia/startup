@@ -242,6 +242,24 @@ socket.onmessage = async (event) => {
   }
 };
 
+function reset() { // allows the player to play again without reseting the webpage
+  const timerDisplay = document.getElementById('player-timer');
+  
+  if (timerDisplay.textContent === "T_T") {
+    clickCount = 0;
+    timerRunning = false;
+    timerInterval;
+    buttonClicked = false;
+    highScore;
+    updateTimerDisplay("- -");
+    const scoreDisplay = document.getElementById('player-score');
+    scoreDisplay.textContent = "- -";
+    const customButton = document.getElementById('custom-button');
+    customButton.textContent = "Click to start";
+    customButton.disabled = false;
+  }
+}
+
 async function main() {
     //functions to use on boot up
     getPlayer();
