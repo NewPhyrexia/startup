@@ -192,17 +192,6 @@ async function fetchPlayerAndUpdate() {
 
 // Functionality for peer communication using WebSocket
 
-socket.onmessage = async (event) => {
-  const msg = JSON.parse(await event.data.text());
-  console.log("in configureWebSocket function");
-  if (msg.type === GameEndEvent) {
-    console.log("passed configureWebSocket event type");
-    console.log(msg.from);
-    console.log(msg.value);
-    updatePlayersScores(msg.from, msg.value);
-  }
-};
-
 function broadcastEvent(from, type, value) {
   console.log("in broadcasting function");
   const event = {
@@ -213,10 +202,10 @@ function broadcastEvent(from, type, value) {
   socket.send(JSON.stringify(event));
 }
 
-function updatePlayersScores(latestPlayerName, latestPlayerScore) {
+function updatePlayersScores(latestPlayerName, vallatestPlayerScoreue) {
   console.log("in update player scores function");
-  console.log(latestPlayerName.userName);
-  console.log(latestPlayerScore.HighScore);
+  console.log(msg.from);
+  console.log(msg.value);
 
 
   //Player 3
@@ -233,10 +222,23 @@ function updatePlayersScores(latestPlayerName, latestPlayerScore) {
 
   //Player 1
   const tempScore1 = document.getElementById('player-1-score');
-  tempScore1.textContent = latestPlayerScore.HighScore;
+  tempScore1.textContent = latestPlayerScore;
   const tempName1 = document.getElementById('player-1-name');
-  tempName1.textContent = latestPlayerName.userName;
+  tempName1.textContent = latestPlayerName;
 }
+
+socket.onmessage = async (event) => {
+  const msg = JSON.parse(await event.data.text());
+  console.log("in configureWebSocket function");
+  if (msg.type === GameEndEvent) {
+    console.log("passed configureWebSocket event type");
+    console.log(msg.from);
+    console.log(msg.value);
+    const from = msg.from;
+    const value = msg.value;
+    updatePlayersScores(from, value);
+  }
+};
 
 async function main() {
     //functions to use on boot up
