@@ -202,7 +202,7 @@ function broadcastEvent(from, type, value) {
   socket.send(JSON.stringify(event));
 }
 
-function updatePlayersScores(latestPlayerName, vallatestPlayerScoreue) {
+function updatePlayersScores(msg) {
   console.log("in update player scores function");
   console.log(msg.from);
   console.log(msg.value);
@@ -222,9 +222,11 @@ function updatePlayersScores(latestPlayerName, vallatestPlayerScoreue) {
 
   //Player 1
   const tempScore1 = document.getElementById('player-1-score');
-  tempScore1.textContent = latestPlayerScore;
+  // tempScore1.textContent = latestPlayerScore.HighScore;
+  tempScore1.textContent = msg.value;
   const tempName1 = document.getElementById('player-1-name');
-  tempName1.textContent = latestPlayerName;
+  // tempName1.textContent = latestPlayerName.userName;
+  tempName1.textContent = msg.from;
 }
 
 socket.onmessage = async (event) => {
@@ -236,7 +238,7 @@ socket.onmessage = async (event) => {
     console.log(msg.value);
     const from = msg.from;
     const value = msg.value;
-    updatePlayersScores(from, value);
+    updatePlayersScores(msg);
   }
 };
 
