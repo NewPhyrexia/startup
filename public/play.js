@@ -86,6 +86,7 @@ function startTimer() {
             } else if (seconds === 0) {
                 updateTimerDisplay("T_T");
                 customButton.disabled = true;
+                console.log(player);
                 updatePlayersScores(player);//web socket placeholder for other player's score update.
                 if (clickCount > highScore) {
                     highScore = clickCount;
@@ -209,23 +210,28 @@ function displayMsg(cls, from, msg) {
 }
 
 function updatePlayersScores(latestPlayer) {
-  //Player 1
-  const tempScore1 = document.getElementById('player-1-score');
-  tempScore1.textContent = "53";
-  const tempName1 = document.getElementById('player-1-name');
-  tempName1.textContent = "Bill";
+  console.log(latestPlayer);
+  console.log(latestPlayer.userName);
+  console.log(latestPlayer.HighScore);
 
-  //Player 2
-  const tempScore2 = document.getElementById('player-2-score');
-  tempScore2.textContent = "67";
-  const tempName2 = document.getElementById('player-2-name');
-  tempName2.textContent = "Ted";
 
   //Player 3
   const tempScore3 = document.getElementById('player-3-score');
-  tempScore3.textContent = "42";
+  tempScore3.textContent = document.getElementById('player-2-score').innerHTML;
   const tempName3 = document.getElementById('player-3-name');
-  tempName3.textContent = "Excellent";
+  tempName3.textContent = document.getElementById('player-2-name').innerHTML;
+
+  //Player 2
+  const tempScore2 = document.getElementById('player-2-score');
+  tempScore2.textContent = document.getElementById('player-1-score').innerHTML;
+  const tempName2 = document.getElementById('player-2-name');
+  tempName2.textContent = document.getElementById('player-1-name').innerHTML;
+
+  //Player 1
+  const tempScore1 = document.getElementById('player-1-score');
+  tempScore1.textContent = latestPlayer.userName; //use player score
+  const tempName1 = document.getElementById('player-1-name');
+  tempName1.textContent = latestPlayer.HighScore; // use player name
 }
 
 async function main() {
