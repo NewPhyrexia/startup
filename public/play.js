@@ -1,13 +1,14 @@
 // Gobal variables
-const GameEndEvent = 'gameEnd';
-
 let clickCount = 0;
 let timerRunning = false;
 let timerInterval;
 let buttonClicked = false;
 let highScore;
-// let player = JSON.parse(localStorage.getItem('player'));
 let player;
+
+const GameEndEvent = 'gameEnd';
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 
 function getPlayer() {
   const nameEl = localStorage.getItem('userName');
@@ -87,7 +88,7 @@ function startTimer() {
                 updateTimerDisplay("T_T");
                 customButton.disabled = true;
                 console.log(player);
-                updatePlayersScores(player);//web socket placeholder for other player's score update.
+                broadcastEvent(player.userName, GameEndEvent, clickCount);
                 if (clickCount > highScore) {
                     highScore = clickCount;
                     updateLifetimeHighScore(highScore);
@@ -191,28 +192,31 @@ async function fetchPlayerAndUpdate() {
 
 // Functionality for peer communication using WebSocket
 
-function configureWebSocket() {
-  const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-  socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
-  socket.onmessage = async (event) => {
-    const msg = JSON.parse(await event.data.text());
-    if (msg.type === GameEndEvent) {
-      this.displayMsg('player', msg.from, `scored ${msg.value.score}`);
-    } else if (msg.type === GameStartEvent) {
-      this.displayMsg('player', msg.from, `started a new game`);
-    }
+socket.onmessage = async (event) => {
+  const msg = JSON.parse(await event.data.text());
+  console.log("in configureWebSocket function");
+  if (msg.type === GameEndEvent) {
+    console.log("passed configureWebSocket event type");
+    console.log(msg.from);
+    console.log(msg.value);
+    updatePlayersScores(msg.from, msg.value);
+  }
+};
+
+function broadcastEvent(from, type, value) {
+  console.log("in broadcasting function");
+  const event = {
+    from: from,
+    type: type,
+    value: value,
   };
+  socket.send(JSON.stringify(event));
 }
 
-function displayMsg(cls, from, msg) {
-  const chatText = document.querySelector('#player-messages');
-  chatText.innerHTML = `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
-}
-
-function updatePlayersScores(latestPlayer) {
-  console.log(latestPlayer);
-  console.log(latestPlayer.userName);
-  console.log(latestPlayer.HighScore);
+function updatePlayersScores(latestPlayerName, latestPlayerScore) {
+  console.log("in update player scores function");
+  console.log(latestPlayerName.userName);
+  console.log(latestPlayerScore.HighScore);
 
 
   //Player 3
@@ -229,16 +233,15 @@ function updatePlayersScores(latestPlayer) {
 
   //Player 1
   const tempScore1 = document.getElementById('player-1-score');
-  tempScore1.textContent = latestPlayer.HighScore; //use player score
+  tempScore1.textContent = latestPlayerScore.HighScore;
   const tempName1 = document.getElementById('player-1-name');
-  tempName1.textContent = latestPlayer.userName; // use player name
+  tempName1.textContent = latestPlayerName.userName;
 }
 
 async function main() {
     //functions to use on boot up
     getPlayer();
     player = JSON.parse(localStorage.getItem('player'));
-    configureWebSocket();
     displayRandomEmoji(); // load a random emoji on page opening
     listeners(); // click event listeners
     await fetchPlayerAndUpdate();
