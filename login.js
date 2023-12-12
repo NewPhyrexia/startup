@@ -1,19 +1,3 @@
-// function login() {
-//   const nameEl = document.querySelector("#name");
-
-//   let playerObject = {
-//       userName: nameEl.value,
-//       HighScore: 0
-//       };
-
-//     localStorage.setItem('player', JSON.stringify(playerObject));
-//     // JSON.parse(localStorage.getItem('playerObject'));
-// }
-
-// My old stuff above
-
-//-----------------------------------------------------------------------
-
 (async () => {
   const userName = localStorage.getItem('userName');
   if (userName) {
