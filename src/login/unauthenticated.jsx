@@ -1,6 +1,7 @@
 import React from "react";
 
 import Button from "react-bootstrap/Button";
+import "../app.css";
 import { MessageDialog } from "./messageDialog";
 
 export function Unauthenticated(props) {
@@ -37,25 +38,29 @@ export function Unauthenticated(props) {
     <>
       <div>
         <div className="input-group mb-3">
-          <span className="input-group-text">@</span>
           <input
-            className="form-control"
+            className="form-control custom-placeholder"
             type="text"
             value={userName}
+            id="userName"
             onChange={(e) => setUserName(e.target.value)}
-            placeholder="your@email.com"
+            placeholder="   username"
           />
         </div>
         <div className="input-group mb-3">
-          <span className="input-group-text">🔒</span>
           <input
-            className="form-control"
+            className="form-control custom-placeholder"
             type="password"
+            id="userPassword"
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="password"
+            placeholder="   password"
           />
         </div>
-        <Button variant="primary" onClick={() => loginUser()}>
+        <Button
+          variant="primary"
+          className="btn btn-teal"
+          onClick={() => loginUser()}
+        >
           Login
         </Button>
         <Button variant="secondary" onClick={() => createUser()}>
