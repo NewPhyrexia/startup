@@ -49,8 +49,8 @@ function setHighScore(score) {
     document.getElementById("lifetime-highscore");
   lifetimeHighScoreDisplay.textContent = highScore;
 }
-// Function to update the lifetime high score display
 function updateLifetimeHighScore(score) {
+  // Function to update the lifetime high score display
   const lifetimeHighScoreDisplay =
     document.getElementById("lifetime-highscore");
   lifetimeHighScoreDisplay.textContent = score; // Display highScore
@@ -59,8 +59,8 @@ function updateLifetimeHighScore(score) {
   updateUserLifetimeHighScore(); // update the user's player obj in db
 }
 
-// Function to update the timer display
 function updateTimerDisplay(seconds) {
+  // Function to update the timer display
   const timerDisplay = document.getElementById("player-timer");
   if (seconds === 0) {
     timerDisplay.textContent = "Time!";
@@ -73,8 +73,8 @@ function updateTimerDisplay(seconds) {
   }
 }
 
-// Function to start the timer and enable button
 function startTimer() {
+  // Function to start the timer and enable button
   if (!timerRunning && !buttonClicked) {
     timerRunning = true;
     buttonClicked = true;
@@ -103,8 +103,8 @@ function startTimer() {
   }
 }
 
-// Function to update the click count
 function updateClickCount() {
+  // Function to update the click count
   if (timerRunning) {
     clickCount++;
     const scoreDisplay = document.getElementById("player-score");
@@ -194,9 +194,8 @@ async function fetchPlayerAndUpdate() {
   }
 }
 
-// Functionality for peer communication using WebSocket
-
 function broadcastEvent(from, type, value) {
+  // Functionality for peer communication using WebSocket
   console.log("in broadcasting function");
   const event = {
     from: from,

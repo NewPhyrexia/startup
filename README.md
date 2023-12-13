@@ -8,7 +8,7 @@ Notes: https://github.com/NewPhyrexia/startup/blob/main/notes.md
 
 ### Elevator pitch
 
-Have you ever needed to prove yourself to someone, or needed to best a rival in a non-physical bout of skill and endurance. The Tapper application makes it so people can good head to head by pulling out their phones and face off in a battle of speed. Each user taps their screen as fast as possible as the timer counts down. The players will see all other player's tap scores in realtime. After the time is out and the smoke settles the victor is declared.  
+Have you ever needed to prove yourself to someone, or needed to best a rival in a non-physical bout of skill and endurance. The Tapper application makes it so people can good head to head by pulling out their phones and face off in a battle of speed. Each user taps their screen as fast as possible as the timer counts down. The players will see all other player's tap scores in realtime. After the time is out and the smoke settles the victor is declared.
 
 ### Design
 
@@ -39,6 +39,7 @@ I am going to use the required technologies in the following ways.
 - **Login** - Register and login users. Credentials securely stored in database. Can't play unless authenticated.
 - **WebSocket** - As each user taps their screen, their tap count is broadcasted to all other users.
 - **React** - Application ported to use the React web framework.
+
 ## HTML deliverable
 
 For this deliverable I built out the structure of my application using HTML.
@@ -107,3 +108,12 @@ For this deliverable I used webSocket to update the player scores in the middle 
 - **Frontend makes WebSocket connection** - done
 - **Data sent over WebSocket connection** - done
 - **WebSocket data displayed** - All user's latest scror display in realtime to other users.
+
+## React deliverable
+
+For this deliverable I converted the application over to use Vite and React.
+
+- **Bundled and transpiled** - done
+- **Components** - Login has the most components. Play has one component.
+- **Router** - Routing between login and play components.
+- **Hooks** - Most of my hooks are useState and a few examples can be seen in unauthenticated.jsx.
