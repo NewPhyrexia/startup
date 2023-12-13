@@ -2,18 +2,18 @@ import React from "react";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import { Login } from "./login/login";
 import { Play } from "./play/play";
-// import { AuthState } from "./login/authState";
+import { AuthState } from "./login/authState";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
 
-export default function App() {
-  // const [userName, setUserName] = React.useState(
-  //   localStorage.getItem("userName") || ""
-  // );
-  // const currentAuthState = userName
-  //   ? AuthState.Authenticated
-  //   : AuthState.Unauthenticated;
-  // const [authState, setAuthState] = React.useState(currentAuthState);
+function App() {
+  const [userName, setUserName] = React.useState(
+    localStorage.getItem("userName") || ""
+  );
+  const currentAuthState = userName
+    ? AuthState.Authenticated
+    : AuthState.Unauthenticated;
+  const [authState, setAuthState] = React.useState(currentAuthState);
 
   return (
     <BrowserRouter>
@@ -29,18 +29,18 @@ export default function App() {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <NavLink className="nav-link" to="Play">
                   Play
                 </NavLink>
-              </li>
-              {/* {authState === AuthState.Authenticated && (
+              </li> */}
+              {authState === AuthState.Authenticated && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="play">
                     Play
                   </NavLink>
                 </li>
-              )} */}
+              )}
             </menu>
           </nav>
         </header>
@@ -50,12 +50,12 @@ export default function App() {
             path="/"
             element={
               <Login
-              // userName={userName}
-              // authState={authState}
-              // onAuthChange={(userName, authState) => {
-              //   setAuthState(authState);
-              //   setUserName(userName);
-              // }}
+                userName={userName}
+                authState={authState}
+                onAuthChange={(userName, authState) => {
+                  setAuthState(authState);
+                  setUserName(userName);
+                }}
               />
             }
             exact
@@ -88,4 +88,4 @@ function NotFound() {
   );
 }
 
-// export default App;
+export default App;
